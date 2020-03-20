@@ -10,7 +10,7 @@ module.exports = {
     },
     pragma: 'React'
   },
-  plugins: ['react', 'prettier'],
+  plugins: ['react', '@typescript-eslint', 'prettier'],
   env: {
     browser: true,
     node: true,
@@ -23,10 +23,12 @@ module.exports = {
     }
   },
   extends: [
+    'airbnb',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
-    'prettier'
+    'prettier/react',
+    'plugin:prettier/recommended'
   ],
   rules: {
     'prettier/prettier': 'off',
@@ -44,16 +46,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/ban-ts-ignore': 0,
     'react/prop-types': 0,
-    'comma-dangle': [
-      'error',
-      {
-        arrays: 'only-multiline',
-        objects: 'only-multiline',
-        imports: 'only-multiline',
-        exports: 'only-multiline',
-        functions: 'only-multiline'
-      }
-    ],
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     quotes: [
       'error',
       'single',
