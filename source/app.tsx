@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 export const App = () => (
   <Router>
     <Route path="/">
-      <p> hello world</p>
+      <p>Supermarket Frontend</p>
     </Route>
   </Router>
 )
