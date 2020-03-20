@@ -55,6 +55,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/ban-ts-ignore': 0,
     'react/prop-types': 0,
+    'import/prefer-default-export': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'import/extensions': ['error', 'never'],
     quotes: [
