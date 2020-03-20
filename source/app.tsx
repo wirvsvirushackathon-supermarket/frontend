@@ -8,3 +8,6 @@ export const App = () => (
     </Route>
   </Router>
 )
+
+const test = 'aaa'
+const test2 = 'bbbb'
