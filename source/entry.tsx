@@ -3,6 +3,7 @@ import { render } from 'react-dom'
 import { App } from './app'
 
 render(<App />, document.getElementById('root'))
+console.log('erer')
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
