@@ -1,0 +1,13 @@
+{
+  "name": "MiniPwa",
+  "short_name": "MiniPwa",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/static/icon.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ]
+}

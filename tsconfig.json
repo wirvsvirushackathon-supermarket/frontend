@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    // "jsxFactory": "h",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": true,
+    "target": "ES5",
+    "sourceMap": true,
+    "rootDir": "./",
+    "baseUrl": "./source"
+  }
+}
