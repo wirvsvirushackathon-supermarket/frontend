@@ -4,7 +4,7 @@ import { SideDrawer } from '../../components'
 
 const MainMenu: FunctionComponent = () => (
   <List>
-    {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+    {['Inbox', 'Starred', 'Send email', 'Drafts'].map(text => (
       <ListItem button key={text}>
         <ListItemText primary={text} />
       </ListItem>

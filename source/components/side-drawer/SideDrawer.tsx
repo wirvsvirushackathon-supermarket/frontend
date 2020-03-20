@@ -5,7 +5,7 @@ import { Drawer, CssBaseline, Divider } from '@material-ui/core'
 import { useSideDrawerStyles } from './use-side-drawer-styles'
 
 export type SideDrawerProps = {
-  primaryMenu: JSX.Element
+  primaryMenu: FunctionComponent
 }
 
 export const SideDrawer: FunctionComponent<SideDrawerProps> = ({
