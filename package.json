@@ -12,20 +12,16 @@
   },
   "lint-staged": {
     "*.js": [
-      "npm run prettier",
-      "git add"
+      "npm run prettier"
     ],
     "*.jsx": [
-      "npm run prettier",
-      "git add"
+      "npm run prettier"
     ],
     "*.ts": [
-      "npm run prettier",
-      "git add"
+      "npm run prettier"
     ],
     "*.tsx": [
-      "npm run prettier",
-      "git add"
+      "npm run prettier"
     ]
   },
   "husky": {
