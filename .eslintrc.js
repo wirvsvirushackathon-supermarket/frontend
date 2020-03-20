@@ -20,6 +20,15 @@ module.exports = {
   settings: {
     react: {
       version: 'detect'
+    },
+    'import/extensions': ['.js', '.jsx', '.ts', '.tsx'],
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.tsx']
+    },
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      }
     }
   },
   extends: [
@@ -47,6 +56,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': 0,
     'react/prop-types': 0,
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
+    'import/extensions': ['error', 'never'],
     quotes: [
       'error',
       'single',
