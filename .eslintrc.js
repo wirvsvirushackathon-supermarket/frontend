@@ -17,6 +17,11 @@ module.exports = {
     es2017: true,
     es6: true
   },
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -24,6 +29,7 @@ module.exports = {
     'prettier'
   ],
   rules: {
+    'prettier/prettier': 'off',
     '@typescript-eslint/no-unused-vars': [
       2,
       {
@@ -38,6 +44,16 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/ban-ts-ignore': 0,
     'react/prop-types': 0,
+    'comma-dangle': [
+      'error',
+      {
+        arrays: 'only-multiline',
+        objects: 'only-multiline',
+        imports: 'only-multiline',
+        exports: 'only-multiline',
+        functions: 'only-multiline'
+      }
+    ],
     quotes: [
       'error',
       'single',
