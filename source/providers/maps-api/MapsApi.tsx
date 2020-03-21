@@ -18,8 +18,6 @@ export const MapsApiProvider: FunctionComponent<{
   lat: number
   lon: number
 }> = ({ lat = 0, lon = 0, ...rest }) => {
-  console.log(lat, lon)
-
   const [services, setServices] = useState<any>(null)
   const mapRef = createRef()
   useEffect(() => {
@@ -48,6 +46,7 @@ export const MapsApiProvider: FunctionComponent<{
           mapOptions
         )
         const mapDiv = document.getElementById(divId)
+        // very dirty
         setTimeout(() => {
           mapDiv.style.position = 'fixed'
           mapDiv.style.top = '0'
@@ -60,13 +59,12 @@ export const MapsApiProvider: FunctionComponent<{
           placesService: new google.maps.places.PlacesService(map),
           mapElement: mapRef
         })
-        console.log(mapDiv?.style)
       })
       .catch(e => {
         // eslint-disable-next-line no-console
         console.log(e)
       })
-  }, [])
+  }, [lat])
 
   return (
     <>

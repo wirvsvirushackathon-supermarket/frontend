@@ -69,14 +69,9 @@ export const SearchHeader: FunctionComponent = () => {
             placesService &&
             typeof placesService.nearbySearch === 'function'
           ) {
-            console.log('exists')
-
             placesService.nearbySearch(request, function(results, status) {
+              // eslint-disable-next-line no-console
               console.log(status, results)
-              // if (status === 'OK') {
-              //   // eslint-disable-next-line no-console
-              //   console.log(results)
-              // }
             })
           }
         }}
