@@ -6,28 +6,47 @@ import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
 import { format, add, isSameMinute } from 'date-fns'
 import parseIsoDuration from 'parse-iso-duration'
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
+import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { slots as MockedSlots } from '../mocked-api'
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    radios: {
+      fill: '#6200EE'
+    }
+  })
+)
 
 type Props = {
   slots: typeof MockedSlots
+  onSlotSelected: (param: string) => void
 }
 
-export const SlotList: FC<Props> = ({ slots }) => {
-  const [selected] = useState<string>()
+export const SlotList: FC<Props> = ({ slots, onSlotSelected }) => {
+  const classes = useStyles()
+  const [selected, setSelected] = useState<string>()
 
   return (
     <List component="nav" aria-label="main mailbox folders">
       {slots.map(slot => {
         const slotStart = new Date(slot.start)
         return (
-          <ListItem button key={slot.start} disabled={!slot.available}>
+          <ListItem
+            button
+            key={slot.start}
+            disabled={!slot.available}
+            onClick={(): void => {
+              setSelected(slot.start)
+              onSlotSelected(slot.start)
+            }}
+          >
             <ListItemIcon>
               <AlarmIcon />
             </ListItemIcon>
             <ListItemText
               primary={`${format(slotStart, 'HH:mm')} - ${format(
                 add(slotStart, {
-                  seconds: parseIsoDuration(slots[0].slotSize) / 1000
+                  seconds: parseIsoDuration(slot.slotSize) / 1000
                 }),
                 'HH:mm'
               )}`}
@@ -38,7 +57,7 @@ export const SlotList: FC<Props> = ({ slots }) => {
             </ListItemIcon>
             {selected &&
             isSameMinute(new Date(selected), new Date(slot.start)) ? (
-              <RadioButtonCheckedIcon />
+              <RadioButtonCheckedIcon className={classes.radios} />
             ) : (
               <RadioButtonUncheckedIcon />
             )}

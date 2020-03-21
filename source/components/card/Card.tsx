@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react'
+import React, { FunctionComponent, useState, useEffect } from 'react'
 import {
   Card as MaterialCard,
   CardActionArea,
@@ -54,11 +54,14 @@ export const Card: FunctionComponent = () => {
   const classes = useStyles()
   const [cardVisible, setCardVisible] = useState(false)
   const [selectedDay, setSelectedDay] = useState(new Date())
-  const [selectedPersons, setSelectedPersons] = useState<number>()
-  const [selectedName, setSelectedName] = useState<string>()
+  const [selectedPersons, setSelectedPersons] = useState(1)
+  const [selectedName, setSelectedName] = useState('')
+  const [selectedSlot, setSelectedSlot] = useState<string>()
+  const [isFormValid, setIsFormValid] = useState(false)
 
-  console.log(selectedPersons)
-  console.log(selectedName)
+  useEffect(() => {
+    setIsFormValid(selectedName.length > 0 && selectedSlot)
+  }, [selectedName, selectedSlot])
 
   const getDaysOfWeek = (): Date[] => {
     return eachDayOfInterval({
@@ -81,9 +84,14 @@ export const Card: FunctionComponent = () => {
     )
   }
 
-  // const handleButtonClick = (): void => {
-  //   // TODO:
-  // }
+  const handleFormSubmit = (): void => {
+    if (isFormValid) {
+      console.log('DAY', selectedDay)
+      console.log('SLOT', selectedSlot)
+      console.log('PERSONS', selectedPersons)
+      console.log('NAME', selectedName)
+    }
+  }
 
   return (
     <MaterialCard className={classes.root}>
@@ -140,6 +148,8 @@ export const Card: FunctionComponent = () => {
             variant="contained"
             color="primary"
             startIcon={<AddIcon />}
+            disabled={!isFormValid}
+            onClick={handleFormSubmit}
           >
             Reservieren
           </Button>
@@ -155,7 +165,10 @@ export const Card: FunctionComponent = () => {
 
         <CardContent>
           <Paper elevation={3}>
-            <SlotList slots={getAllSlotsForASelectedDay()} />
+            <SlotList
+              slots={getAllSlotsForASelectedDay()}
+              onSlotSelected={setSelectedSlot}
+            />
           </Paper>
         </CardContent>
 
