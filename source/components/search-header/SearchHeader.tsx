@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
@@ -11,6 +11,7 @@ import {
   useMapsApi,
   useAppState
 } from '../../providers'
+import { useSearchHandler } from './use-search-handler'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,8 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const SearchHeader: FunctionComponent = () => {
   const classes = useStyles()
-  const { placesService } = useMapsApi()
-  const { state } = useAppState()
+  const handleSearch = useSearchHandler()
   const toggleSidebar = useToggleSideBarHandler()
   return (
     <Paper component="form" className={classes.root}>
@@ -54,28 +54,7 @@ export const SearchHeader: FunctionComponent = () => {
         className={classes.input}
         placeholder="Search Google Maps"
         inputProps={{ 'aria-label': 'search google maps' }}
-        onKeyUp={(e): void => {
-          const request = {
-            name: e.target.value,
-            fields: ['name', 'geometry'],
-            location: {
-              lat: state.userLocation.lat,
-              lng: state.userLocation.lon
-            },
-            type: ['grocery_or_supermarket', 'supermarket'],
-            radius: '10000'
-          }
-          if (
-            placesService &&
-            typeof placesService.nearbySearch === 'function'
-          ) {
-            // eslint-disable-next-line func-names
-            placesService.nearbySearch(request, function(results, status) {
-              // eslint-disable-next-line no-console
-              console.log(status, results)
-            })
-          }
-        }}
+        onKeyUp={handleSearch}
       />
       <IconButton
         type="submit"
