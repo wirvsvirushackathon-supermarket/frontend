@@ -63,7 +63,7 @@ export const MapsApiProvider: FunctionComponent<{
         // eslint-disable-next-line no-console
         console.log(e)
       })
-  }, [lat])
+  }, [])
 
   return (
     <>
