@@ -29,7 +29,7 @@ export const MapsApiProvider: FunctionComponent<{
         lat,
         lng: lon
       },
-      zoom: 4
+      zoom: 15
     }
     const loader = new Loader({
       apiKey: env.googleAPiKEy,
@@ -56,6 +56,7 @@ export const MapsApiProvider: FunctionComponent<{
         setServices({
           // eslint-disable-next-line no-undef
           placesService: new google.maps.places.PlacesService(map),
+          mapService: map,
           mapElement: mapRef
         })
       })
@@ -64,7 +65,13 @@ export const MapsApiProvider: FunctionComponent<{
         console.log(e)
       })
   }, [])
+  useEffect(() => {
+    console.log(lat, lon)
 
+    if (services && services.mapService && lat !== 0 && lon !== 0) {
+      services.mapService.panTo({ lat, lng: lon })
+    }
+  }, [lat, lon, services])
   return (
     <>
       <div

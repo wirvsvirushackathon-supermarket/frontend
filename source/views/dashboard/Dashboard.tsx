@@ -25,7 +25,7 @@ export const Dashboard: FunctionComponent = () => {
     <div>
       <MapsApiProvider
         lat={state.userLocation.lat}
-        lon={state.userLocation.lat}
+        lon={state.userLocation.lon}
       >
         <SideDrawer PrimaryMenu={MainMenu} />
         <SearchHeader />
