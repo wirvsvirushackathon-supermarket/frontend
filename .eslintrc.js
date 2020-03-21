@@ -53,6 +53,7 @@ module.exports = {
       }
     ],
     '@typescript-eslint/semi': [2, 'never'],
+    '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/no-var-requires': 0,
     '@typescript-eslint/member-delimiter-style': 0,
     '@typescript-eslint/no-non-null-assertion': 0,

@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react'
+import React, { FunctionComponent, useEffect, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 import InputBase from '@material-ui/core/InputBase'
@@ -7,7 +7,8 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import { useToggleSideBarHandler } from '../../providers'
-import { useSearchHandler } from './use-search-handler'
+import { useKeyupHandler } from './use-keyup-handler'
+import { useClickHandler } from './use-click-handler'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,8 +37,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const SearchHeader: FunctionComponent = () => {
   const classes = useStyles()
-  const handleSearch = useSearchHandler()
+  const onKeyUp = useKeyupHandler()
+  const onClick = useClickHandler()
+
   const toggleSidebar = useToggleSideBarHandler()
+  const [value, setValue] = useState<string>('')
+
+  useEffect(() => {
+    onKeyUp(value)
+  }, [value])
   return (
     <Paper component="form" className={classes.root}>
       <IconButton
@@ -49,14 +57,18 @@ export const SearchHeader: FunctionComponent = () => {
       </IconButton>
       <InputBase
         className={classes.input}
-        placeholder="Search Google Maps"
+        placeholder="Suche nach einem Supermarket"
         inputProps={{ 'aria-label': 'search google maps' }}
-        onKeyUp={handleSearch}
+        onKeyUp={e => setValue((e.target as HTMLInputElement).value)}
       />
       <IconButton
         type="submit"
         className={classes.iconButton}
         aria-label="search"
+        onClick={e => {
+          e.preventDefault()
+          onClick(value)
+        }}
       >
         <SearchIcon />
       </IconButton>
