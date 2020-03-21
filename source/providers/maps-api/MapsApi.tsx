@@ -3,7 +3,9 @@ import React, {
   FunctionComponent,
   useContext,
   useState,
-  useEffect
+  useEffect,
+  createRef,
+  Fragment
 } from 'react'
 import { Loader } from '@googlemaps/loader'
 import env from '../../env'
@@ -12,10 +14,21 @@ const MapsApiContext = createContext({
   placesService: {} as any
 })
 
-export const MapsApiProvider: FunctionComponent = props => {
+export const MapsApiProvider: FunctionComponent<{
+  lat: number
+  lon: number
+}> = ({ lat = 0, lon = 0, ...rest }) => {
   const [services, setServices] = useState<any>(null)
+  const mapRef = createRef()
   useEffect(() => {
-    if (services === null) {
+    if (services === null && mapRef.current !== null) {
+      const mapOptions = {
+        center: {
+          lat,
+          lng: lon
+        },
+        zoom: 4
+      }
       const loader = new Loader({
         apiKey: env.googleAPiKEy,
         version: 'weekly',
@@ -24,15 +37,12 @@ export const MapsApiProvider: FunctionComponent = props => {
       loader
         .load()
         .then(() => {
-          const mapDummyDiv = document.createElement('div')
-          const ID = 'MapsApiID'
-          mapDummyDiv.id = ID
-          document.body.appendChild(mapDummyDiv)
           // eslint-disable-next-line no-undef
-          const map = new google.maps.Map(document.getElementById(ID))
+          const map = new google.maps.Map(mapRef.current, mapOptions)
           setServices({
             // eslint-disable-next-line no-undef
-            placesService: new google.maps.places.PlacesService(map)
+            placesService: new google.maps.places.PlacesService(map),
+            mapElement: mapRef
           })
         })
         .catch(e => {
@@ -40,13 +50,33 @@ export const MapsApiProvider: FunctionComponent = props => {
           console.log(e)
         })
     }
-  }, [services])
+  }, [services, mapRef])
+
   return (
-    <MapsApiContext.Provider
-      value={{ ...services }}
-      // eslint-disable-next-line react/jsx-props-no-spreading
-      {...props}
-    />
+    <>
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          left: 0,
+          bottom: 0
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            height: '100%'
+          }}
+          ref={mapRef}
+        />
+      </div>
+      <MapsApiContext.Provider
+        value={{ ...services }}
+        // eslint-disable-next-line react/jsx-props-no-spreading
+        {...rest}
+      />
+    </>
   )
 }
 

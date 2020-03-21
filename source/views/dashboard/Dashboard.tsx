@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react'
 import { List, ListItem, ListItemText } from '@material-ui/core'
 import { useTheme } from '../../providers/theme/Theme'
-import { SideDrawer, Map, SearchHeader } from '../../components'
+import { SideDrawer, SearchHeader } from '../../components'
+import { MapsApiProvider } from '../../providers'
 
 const MainMenu: FunctionComponent = () => {
   const { setTheme, themes } = useTheme()
@@ -21,9 +22,10 @@ const MainMenu: FunctionComponent = () => {
 export const Dashboard: FunctionComponent = () => {
   return (
     <div>
-      <SideDrawer PrimaryMenu={MainMenu} />
-      <SearchHeader />
-      <Map />
+      <MapsApiProvider>
+        <SideDrawer PrimaryMenu={MainMenu} />
+        <SearchHeader />
+      </MapsApiProvider>
     </div>
   )
 }

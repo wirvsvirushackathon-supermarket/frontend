@@ -65,12 +65,20 @@ export const SearchHeader: FunctionComponent = () => {
             type: ['grocery_or_supermarket', 'supermarket'],
             radius: '10000'
           }
-          placesService.nearbySearch(request, (results, status) => {
-            if (status === 'OK') {
-              // eslint-disable-next-line no-console
-              console.log(results)
-            }
-          })
+          if (
+            placesService &&
+            typeof placesService.nearbySearch === 'function'
+          ) {
+            console.log('exists')
+
+            placesService.nearbySearch(request, function(results, status) {
+              console.log(status, results)
+              // if (status === 'OK') {
+              //   // eslint-disable-next-line no-console
+              //   console.log(results)
+              // }
+            })
+          }
         }}
       />
       <IconButton
