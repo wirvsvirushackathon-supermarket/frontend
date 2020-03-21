@@ -10,6 +10,9 @@ module.exports = {
     },
     pragma: 'React'
   },
+  globals: {
+    google: 'readonly'
+  },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   env: {
     browser: true,
@@ -41,10 +44,11 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'off',
+    'no-underscore-dangle': 'off',
     '@typescript-eslint/no-unused-vars': [
       2,
       {
-        varsIgnorePattern: '^React$',
+        varsIgnorePattern: '^_.*$',
         argsIgnorePattern: '^_.*?$'
       }
     ],
