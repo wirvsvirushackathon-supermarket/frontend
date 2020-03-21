@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react'
 import { List, ListItem, ListItemText } from '@material-ui/core'
 import { useTheme } from '../../providers/theme/Theme'
-import { SideDrawer, SearchHeader } from '../../components'
+import { SideDrawer, SearchHeader, Card } from '../../components'
 import { MapsApiProvider, useAppState } from '../../providers'
 
 const MainMenu: FunctionComponent = () => {
@@ -30,6 +30,7 @@ export const Home: FunctionComponent = () => {
         <SideDrawer PrimaryMenu={MainMenu} />
         <SearchHeader />
       </MapsApiProvider>
+      <Card />
     </div>
   )
 }
