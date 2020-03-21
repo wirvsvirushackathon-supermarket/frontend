@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { useMapsApi, useAppState, useMapSearchShow } from '../../providers'
 
 export const useClickHandler = (): ((val: string) => void) => {

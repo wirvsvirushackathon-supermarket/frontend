@@ -2,8 +2,7 @@ import React, {
   createContext,
   useState,
   FunctionComponent,
-  useContext,
-  useEffect
+  useContext
 } from 'react'
 
 const LOCAL_STORAGE_KEY = 'APP_STATE'
