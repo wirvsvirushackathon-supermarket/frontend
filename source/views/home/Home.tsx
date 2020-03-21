@@ -39,12 +39,12 @@ const MainMenu: FunctionComponent = () => {
     {
       text: 'Filialbesitzer registrieren',
       icon: <StorefrontTwoTone />,
-      href: '/overlay/info'
+      href: '/overlay/register'
     },
     {
       text: 'Login Filialbesitzer',
       icon: <PermIdentityTwoTone />,
-      href: '/overlay/info'
+      href: '/overlay/login'
     }
   ]
   return (
@@ -72,8 +72,11 @@ export const Home: FunctionComponent = () => {
       <MapsApiProvider>
         <SideDrawer PrimaryMenu={MainMenu} />
         <SearchHeader />
-        <Route path="/overlay">
-          <Overlay>
+        <Route path="/overlay/info">
+          <Overlay headerTitle="So funktioniert es">
+            <p>some</p>
+          </Overlay>
+          <Overlay headerTitle="Für Filialbesitzer">
             <p>some</p>
           </Overlay>
         </Route>

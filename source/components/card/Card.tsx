@@ -54,11 +54,8 @@ export const Card: FunctionComponent = () => {
   const classes = useStyles()
   const [cardVisible, setCardVisible] = useState(false)
   const [selectedDay, setSelectedDay] = useState(new Date())
-  const [selectedPersons, setSelectedPersons] = useState<number>()
-  const [selectedName, setSelectedName] = useState<string>()
-
-  console.log(selectedPersons)
-  console.log(selectedName)
+  const [_selectedPersons, setSelectedPersons] = useState<number>()
+  const [_selectedName, setSelectedName] = useState<string>()
 
   const getDaysOfWeek = (): Date[] => {
     return eachDayOfInterval({

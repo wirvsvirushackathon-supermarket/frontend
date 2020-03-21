@@ -12,22 +12,21 @@
   },
   "lint-staged": {
     "*.js": [
-      "npm run prettier"
+      "npm run prettier && npm run lint"
     ],
     "*.jsx": [
-      "npm run prettier"
+      "npm run prettier && npm run lint"
     ],
     "*.ts": [
-      "npm run prettier"
+      "npm run prettier && npm run lint"
     ],
     "*.tsx": [
-      "npm run prettier"
+      "npm run prettier && npm run lint"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
-      "pre-push": "npm run lint"
+      "pre-commit": "lint-staged"
     }
   },
   "keywords": [],

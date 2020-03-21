@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Drawer, CssBaseline, Divider, Typography } from '@material-ui/core'
+import { Drawer, CssBaseline, Typography } from '@material-ui/core'
 import { useAppState } from '../../providers'
 import { useSideDrawerStyles } from './use-side-drawer-styles'
 import { Logo } from '../logo'
