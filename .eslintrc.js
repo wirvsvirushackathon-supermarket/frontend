@@ -10,6 +10,9 @@ module.exports = {
     },
     pragma: 'React'
   },
+  globals: {
+    google: 'readonly'
+  },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   env: {
     browser: true,
