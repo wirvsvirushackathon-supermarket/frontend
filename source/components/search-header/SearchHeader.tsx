@@ -6,11 +6,8 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
-import {
-  useToggleSideBarHandler,
-  useMapsApi,
-  useAppState
-} from '../../providers'
+import { useToggleSideBarHandler } from '../../providers'
+import { useSearchHandler } from './use-search-handler'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,8 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const SearchHeader: FunctionComponent = () => {
   const classes = useStyles()
-  const { placesService } = useMapsApi()
-  const { state } = useAppState()
+  const handleSearch = useSearchHandler()
   const toggleSidebar = useToggleSideBarHandler()
   return (
     <Paper component="form" className={classes.root}>
@@ -54,28 +50,7 @@ export const SearchHeader: FunctionComponent = () => {
         className={classes.input}
         placeholder="Search Google Maps"
         inputProps={{ 'aria-label': 'search google maps' }}
-        onKeyUp={(e): void => {
-          const request = {
-            name: e.target.value,
-            fields: ['name', 'geometry'],
-            location: {
-              lat: state.userLocation.lat,
-              lng: state.userLocation.lon
-            },
-            type: ['grocery_or_supermarket', 'supermarket'],
-            radius: '10000'
-          }
-          if (
-            placesService &&
-            typeof placesService.nearbySearch === 'function'
-          ) {
-            // eslint-disable-next-line func-names
-            placesService.nearbySearch(request, function(results, status) {
-              // eslint-disable-next-line no-console
-              console.log(status, results)
-            })
-          }
-        }}
+        onKeyUp={handleSearch}
       />
       <IconButton
         type="submit"
