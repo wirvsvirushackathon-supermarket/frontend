@@ -34,6 +34,9 @@ export const useSideDrawerStyles = makeStyles((theme: Theme) =>
     drawerPaper: {
       width: drawerWidth
     },
+    toolbar: {
+      marginTop: '48px'
+    },
     drawerHeader: {
       display: 'flex',
       alignItems: 'center',
