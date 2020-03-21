@@ -9,5 +9,6 @@ export const Home: FunctionComponent = () => (
       A VERY FANCY LANGING PAGE
     </Typography>
     <Button href="/dashboard">Go to dashboard</Button>
+    <Button href="/ticket">Go to ticket</Button>
   </div>
 )

@@ -1,0 +1,22 @@
+.wrap {
+    text-align: center;
+    margin: auto;
+    width: 30%;
+}
+
+.date {
+    width: 100px;
+    height: 150px;
+    background-color: #1976d2;
+    border-radius: 10px;
+    margin-top: 2%;
+}
+
+.upperDate {
+    height: 100px;
+}
+
+.lowerDate {
+    border-top: 3px dashed white;
+    height: 50px;
+}
