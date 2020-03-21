@@ -4,8 +4,7 @@ import React, {
   useContext,
   useState,
   useEffect,
-  createRef,
-  Fragment
+  createRef
 } from 'react'
 import { Loader } from '@googlemaps/loader'
 import env from '../../env'

@@ -69,6 +69,7 @@ export const SearchHeader: FunctionComponent = () => {
             placesService &&
             typeof placesService.nearbySearch === 'function'
           ) {
+            // eslint-disable-next-line func-names
             placesService.nearbySearch(request, function(results, status) {
               // eslint-disable-next-line no-console
               console.log(status, results)
