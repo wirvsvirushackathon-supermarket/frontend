@@ -25,7 +25,7 @@ type AppState = {
     lon: number
   }
   placeApiSearchType: string
-  currentPlaceApiResult: google.maps.places.PlaceResult | null
+  currentPlaceApiResult?: google.maps.places.PlaceResult
 }
 
 const localStorageState = (): any => {

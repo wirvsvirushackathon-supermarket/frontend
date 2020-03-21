@@ -6,16 +6,21 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
   const { state, setAppState } = useAppState()
   const [value, setValue] = useState<string>('')
   const [debouncer, setDebouncer] = useState<any>(null)
+
   useEffect(() => {
+    if (!mapService) return
+    const { lat, lng } = mapService.getCenter()
     const request = {
       name: value,
       location: {
-        lat: state.userLocation.lat,
-        lng: state.userLocation.lon
+        lat: lat(),
+        lng: lng()
       },
       type: state.placeApiSearchType,
       radius: 1000
     }
+    console.log(request)
+
     // remove old if any
     const newMarkers: google.maps.Marker[] = []
     if (
@@ -53,7 +58,6 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
                     })
                   }
                 )
-
                 mapService.setZoom(15)
                 mapService.setCenter({
                   lat: results[i].geometry?.location.lat()!,
@@ -74,7 +78,7 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
         }
       }
     }
-  }, [value])
+  }, [value, mapService])
   return (e): void => {
     e.persist()
     clearTimeout(debouncer)
