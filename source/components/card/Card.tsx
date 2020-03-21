@@ -57,6 +57,9 @@ export const Card: FunctionComponent = () => {
   const [selectedPersons, setSelectedPersons] = useState<number>()
   const [selectedName, setSelectedName] = useState<string>()
 
+  console.log(selectedPersons)
+  console.log(selectedName)
+
   const getDaysOfWeek = (): Date[] => {
     return eachDayOfInterval({
       start: new Date(slots[0].start),
@@ -78,9 +81,9 @@ export const Card: FunctionComponent = () => {
     )
   }
 
-  const handleButtonClick = (): void => {
-    // TODO:
-  }
+  // const handleButtonClick = (): void => {
+  //   // TODO:
+  // }
 
   return (
     <MaterialCard className={classes.root}>
@@ -113,7 +116,7 @@ export const Card: FunctionComponent = () => {
           className={classes.backButton}
           color="primary"
           aria-label="back"
-          onClick={() => setCardVisible(false)}
+          onClick={(): void => setCardVisible(false)}
         >
           <ArrowBackIcon />
         </Fab>
@@ -124,7 +127,7 @@ export const Card: FunctionComponent = () => {
           className={classes.closeButton}
           color="primary"
           aria-label="back"
-          onClick={() => alert('ICH BRAUCH NOCH LOGIK')}
+          onClick={(): void => alert('ICH BRAUCH NOCH LOGIK')}
         >
           <CloseIcon />
         </Fab>

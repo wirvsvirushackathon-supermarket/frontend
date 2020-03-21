@@ -1,32 +1,26 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
-import { makeStyles, createStyles } from '@material-ui/core/styles'
 import AlarmIcon from '@material-ui/icons/Alarm'
-import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
-import { format, add } from 'date-fns'
+import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked'
+import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked'
+import { format, add, isSameMinute } from 'date-fns'
 import parseIsoDuration from 'parse-iso-duration'
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
-import { slots } from '../mocked-api'
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    'button-selected': {
-      'background-color': '#BB86FC'
-    }
-  })
-)
+import { slots as MockedSlots } from '../mocked-api'
 
 type Props = {
-  slots: typeof slots
+  slots: typeof MockedSlots
 }
 
 export const SlotList: FC<Props> = ({ slots }) => {
+  const [selected] = useState<string>()
+
   return (
     <List component="nav" aria-label="main mailbox folders">
       {slots.map(slot => {
         const slotStart = new Date(slot.start)
         return (
-          <ListItem button key={slot.start}>
+          <ListItem button key={slot.start} disabled={!slot.available}>
             <ListItemIcon>
               <AlarmIcon />
             </ListItemIcon>
@@ -42,7 +36,12 @@ export const SlotList: FC<Props> = ({ slots }) => {
             <ListItemIcon>
               <PeopleAltIcon />
             </ListItemIcon>
-            <FiberManualRecordIcon />
+            {selected &&
+            isSameMinute(new Date(selected), new Date(slot.start)) ? (
+              <RadioButtonCheckedIcon />
+            ) : (
+              <RadioButtonUncheckedIcon />
+            )}
           </ListItem>
         )
       })}
