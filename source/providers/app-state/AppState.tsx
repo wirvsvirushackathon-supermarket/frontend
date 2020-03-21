@@ -5,6 +5,8 @@ import React, {
   useContext
 } from 'react'
 
+const LOCAL_STORAGE_KEY = 'APP_STATE'
+
 const defaultState = {
   sidebarVisible: false,
   userLocation: {
@@ -13,21 +15,35 @@ const defaultState = {
   }
 }
 
+const localStorageState = () => {
+  const data = localStorage.getItem(LOCAL_STORAGE_KEY)
+  if (typeof data === 'string') {
+    return JSON.parse(data)
+  }
+  return data
+}
+
+const defaultStoredState = localStorageState()
+
 type AppState = typeof defaultState
 
 const AppStateContext = createContext({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setAppState: (_State: AppState) => {},
-  state: defaultState
+  state: defaultStoredState || defaultState
 })
 
 export const AppStateProvider: FunctionComponent = props => {
   const [state, setAppState] = useState<AppState>(defaultState)
 
-  // DIRTY should be put somewhere else
+  const persistentSetter = (newState: AppState): void => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newState))
+    setAppState({ ...newState })
+  }
+
   navigator.geolocation.getCurrentPosition(
     ({ coords }) => {
-      setAppState({
+      persistentSetter({
         ...state,
         userLocation: {
           lat: coords.latitude,
@@ -37,11 +53,12 @@ export const AppStateProvider: FunctionComponent = props => {
     },
     () => {}
   )
+
   return (
     <AppStateContext.Provider
       value={{
         state,
-        setAppState
+        setAppState: persistentSetter
       }}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...props}
