@@ -15,7 +15,7 @@ import {
 import CloseIcon from '@material-ui/icons/Close'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
 
-const { wrap, date, upperDate, lowerDate } = require('./ticket.css')
+const { wrap, date, upperDate, lowerDate, time } = require('./ticket.css')
 
 export const Ticket: FunctionComponent = () => (
   <div className={wrap}>
@@ -50,9 +50,15 @@ const DateInfo: FunctionComponent = () => (
       <div className={upperDate}>
         <Typography variant="h6">30</Typography>
         <Typography>MIN</Typography>
-        <div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '20px'
+          }}
+        >
           <AccessTimeIcon fontSize="small" />
-          14:30 - 14:00
+          <div className={time}>13:30 - 14:00</div>
         </div>
       </div>
       <div className={lowerDate}>
@@ -74,6 +80,9 @@ const PersonInfo: FunctionComponent = () => (
       </ListItem>
       <ListItem>
         <ListItemText primary="Anzahl Begleitpersonen: 1" />
+      </ListItem>
+      <ListItem>
+        <ListItemText secondary="Hinweis: Einlass nur mit Personalausweis" />
       </ListItem>
     </List>
   </Container>

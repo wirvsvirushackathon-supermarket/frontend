@@ -7,14 +7,25 @@
 .date {
     background-color: #1976d2;
     border-radius: 10px;
+    width: 40%;
+    margin: auto;
     margin-top: 2%;
 }
 
 .upperDate {
     height: 70%;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .lowerDate {
     border-top: 1px dashed white;
     height: 30%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.time {
+    text-align: center;
+    margin-left: 5px;
 }
