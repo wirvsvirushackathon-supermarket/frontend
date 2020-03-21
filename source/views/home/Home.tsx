@@ -1,31 +1,82 @@
 import React, { FunctionComponent } from 'react'
-import { List, ListItem, ListItemText } from '@material-ui/core'
-import { useTheme } from '../../providers/theme/Theme'
-import { SideDrawer, SearchHeader, Card } from '../../components'
-import { MapsApiProvider, useAppState } from '../../providers'
+import {
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  createStyles,
+  makeStyles,
+  Theme
+} from '@material-ui/core'
+import {
+  InfoRounded,
+  PermIdentityTwoTone,
+  StorefrontTwoTone
+} from '@material-ui/icons'
+import { Route, useHistory } from 'react-router-dom'
 
+import { SideDrawer, SearchHeader, Card, Overlay } from '../../components'
+import { MapsApiProvider } from '../../providers'
+
+export const useMainMenuStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    icon: {
+      paddingRight: theme.spacing(1),
+      minWidth: 'auto'
+    }
+  })
+)
 const MainMenu: FunctionComponent = () => {
-  const { setTheme, themes } = useTheme()
+  const classes = useMainMenuStyles()
+  const history = useHistory()
 
+  const conf = [
+    {
+      text: 'So funktioniert es',
+      icon: <InfoRounded />,
+      href: '/overlay/info'
+    },
+    {
+      text: 'Filialbesitzer registrieren',
+      icon: <StorefrontTwoTone />,
+      href: '/overlay/info'
+    },
+    {
+      text: 'Login Filialbesitzer',
+      icon: <PermIdentityTwoTone />,
+      href: '/overlay/info'
+    }
+  ]
   return (
     <List>
-      <ListItem button onClick={(): void => setTheme(themes.lightTheme)}>
-        <ListItemText primary="Light theme" />
-      </ListItem>
-      <ListItem button onClick={(): void => setTheme(themes.darkTheme)}>
-        <ListItemText primary="Dark theme" />
-      </ListItem>
+      {conf.map(({ text, icon, href }) => (
+        <ListItem
+          onClick={() => {
+            history.push(href)
+          }}
+          key={text}
+          button
+          href="/overlay/register"
+        >
+          <ListItemIcon className={classes.icon}>{icon}</ListItemIcon>
+          <ListItemText primary={text} />
+        </ListItem>
+      ))}
     </List>
   )
 }
 
 export const Home: FunctionComponent = () => {
-  const { state } = useAppState()
   return (
     <div>
       <MapsApiProvider>
         <SideDrawer PrimaryMenu={MainMenu} />
         <SearchHeader />
+        <Route path="/overlay">
+          <Overlay>
+            <p>some</p>
+          </Overlay>
+        </Route>
       </MapsApiProvider>
       <Card />
     </div>

@@ -43,6 +43,7 @@ export const useMapServices = (): GoogleMapsServices => {
           mapDiv.style.left = '0'
           mapDiv.style.bottom = '0'
           mapDiv.style.right = '0'
+          mapDiv.style.zIndex = '-1'
         }, 500)
         setServices({
           placesService: new google.maps.places.PlacesService(map),

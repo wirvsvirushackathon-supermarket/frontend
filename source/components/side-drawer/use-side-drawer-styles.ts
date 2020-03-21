@@ -1,6 +1,6 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 
-const drawerWidth = 240
+const drawerWidth = 340
 
 export const useSideDrawerStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,6 +40,10 @@ export const useSideDrawerStyles = makeStyles((theme: Theme) =>
     logo: {
       maxWidth: '140px',
       marginTop: theme.spacing(2),
+      marginLeft: theme.spacing(2)
+    },
+    claim: {
+      marginTop: theme.spacing(0.5),
       marginLeft: theme.spacing(2)
     },
     drawerHeader: {

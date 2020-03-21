@@ -12,7 +12,7 @@ export const Logo: FunctionComponent = () => {
       data-name="Ebene 1"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 1299.71 301.92"
-      style={{ display: 'block', width: '100%', height: '100%' }}
+      style={{ display: 'block', width: '100%', height: 'auto' }}
     >
       <path
         fill={fill}

@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react'
-import { Drawer, CssBaseline, Divider } from '@material-ui/core'
+import { Drawer, CssBaseline, Divider, Typography } from '@material-ui/core'
 import { useAppState } from '../../providers'
 import { useSideDrawerStyles } from './use-side-drawer-styles'
 import { Logo } from '../logo'
@@ -29,6 +29,14 @@ export const SideDrawer: FunctionComponent<SideDrawerProps> = ({
         <div className={classes.logo}>
           <Logo />
         </div>
+        <Typography
+          className={classes.claim}
+          variant="caption"
+          display="block"
+          gutterBottom
+        >
+          Sicher öffentlich unterwegs.
+        </Typography>
         <PrimaryMenu />
       </Drawer>
     </div>

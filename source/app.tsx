@@ -10,7 +10,7 @@ export const App: FunctionComponent = () => (
       <ThemeProvider>
         <CssBaseline />
         <Router>
-          <Route exact path="/">
+          <Route path="/">
             <Home />
           </Route>
         </Router>
