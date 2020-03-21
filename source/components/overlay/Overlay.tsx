@@ -4,40 +4,46 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Button
+  Slide
 } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import { Route, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useOverlayStyles } from './use-overlay-styles'
 
 export type OverlayProps = {
   headerTitle: string
+  show: boolean
 }
 export const Overlay: FunctionComponent<OverlayProps> = ({
   headerTitle,
-  children
+  children,
+  show
 }) => {
   const history = useHistory()
-
   const classes = useOverlayStyles()
   return (
-    <div className={classes.wrap}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <CloseIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            {headerTitle}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <div>{children}</div>
-    </div>
+    <Slide direction="down" timeout={250} in={show} mountOnEnter unmountOnExit>
+      <div className={classes.wrap}>
+        <AppBar position="static">
+          <Toolbar>
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={() => {
+                history.goBack()
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="h6" className={classes.title}>
+              {headerTitle}
+            </Typography>
+          </Toolbar>
+        </AppBar>
+        <div className={classes.body}>{children}</div>
+      </div>
+    </Slide>
   )
 }

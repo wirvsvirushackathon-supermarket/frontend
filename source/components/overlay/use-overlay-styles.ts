@@ -8,10 +8,15 @@ export const useOverlayStyles = makeStyles((theme: Theme) =>
       right: 0,
       bottom: 0,
       left: 0,
-      zIndex: 100000
+      zIndex: 100000,
+      overflow: 'scroll',
+      background: theme.palette.background.default
     },
     root: {
       flexGrow: 1
+    },
+    body: {
+      padding: theme.spacing(3)
     },
     menuButton: {
       marginRight: theme.spacing(2)

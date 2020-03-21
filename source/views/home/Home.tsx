@@ -13,10 +13,16 @@ import {
   PermIdentityTwoTone,
   StorefrontTwoTone
 } from '@material-ui/icons'
-import { Route, useHistory } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 
-import { SideDrawer, SearchHeader, Card, Overlay } from '../../components'
-import { MapsApiProvider } from '../../providers'
+import {
+  SideDrawer,
+  SearchHeader,
+  Card,
+  Overlay,
+  About
+} from '../../components'
+import { MapsApiProvider, useAppState } from '../../providers'
 
 export const useMainMenuStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,6 +35,8 @@ export const useMainMenuStyles = makeStyles((theme: Theme) =>
 const MainMenu: FunctionComponent = () => {
   const classes = useMainMenuStyles()
   const history = useHistory()
+
+  const { state, setAppState } = useAppState()
 
   const conf = [
     {
@@ -52,6 +60,7 @@ const MainMenu: FunctionComponent = () => {
       {conf.map(({ text, icon, href }) => (
         <ListItem
           onClick={() => {
+            setAppState({ ...state, sidebarVisible: false })
             history.push(href)
           }}
           key={text}
@@ -67,19 +76,21 @@ const MainMenu: FunctionComponent = () => {
 }
 
 export const Home: FunctionComponent = () => {
+  const location = useLocation()
   return (
     <div>
       <MapsApiProvider>
         <SideDrawer PrimaryMenu={MainMenu} />
         <SearchHeader />
-        <Route path="/overlay/info">
-          <Overlay headerTitle="So funktioniert es">
-            <p>some</p>
-          </Overlay>
-          <Overlay headerTitle="Für Filialbesitzer">
-            <p>some</p>
-          </Overlay>
-        </Route>
+        <Overlay
+          show={location.pathname === '/overlay/info'}
+          headerTitle="So funktioniert es"
+        >
+          <About />
+        </Overlay>
+        <Overlay headerTitle="Für Filialbesitzer">
+          <p>some</p>
+        </Overlay>
       </MapsApiProvider>
       <Card />
     </div>
