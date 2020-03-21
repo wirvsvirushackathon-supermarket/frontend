@@ -13,7 +13,9 @@ const defaultState = {
   userLocation: {
     lat: 0,
     lon: 0
-  }
+  },
+  placeApiSearchType: 'grocery_or_supermarket',
+  currentPlaceApiResult: null
 }
 
 type AppState = {
@@ -22,6 +24,8 @@ type AppState = {
     lat: number
     lon: number
   }
+  placeApiSearchType: string
+  currentPlaceApiResult: google.maps.places.PlaceResult | null
 }
 
 const localStorageState = (): any => {
