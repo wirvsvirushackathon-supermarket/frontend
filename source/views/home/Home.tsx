@@ -1,12 +1,10 @@
 import React, { FunctionComponent } from 'react'
 import { Button, Typography } from '@material-ui/core'
 
-const styles = require('./home.css')
-
-console.log(styles)
+const { wrap } = require('./home.css')
 
 export const Home: FunctionComponent = () => (
-  <div className={styles.wrap}>
+  <div className={wrap}>
     <Typography variant="h4" component="h1" gutterBottom>
       A VERY FANCY LANGING PAGE
     </Typography>
