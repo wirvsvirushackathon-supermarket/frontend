@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       width: '100%',
       position: 'relative',
-      zIndex: 10000
+      zIndex: 10000,
+      'border-radius': 0
     },
     input: {
       marginLeft: theme.spacing(1),

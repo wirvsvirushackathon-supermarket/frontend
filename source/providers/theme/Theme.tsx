@@ -28,7 +28,7 @@ const ThemeContext = createContext({
 })
 
 export const ThemeProvider: FunctionComponent = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(darkTheme)
+  const [theme, setTheme] = useState<Theme>(lightTheme)
   return (
     <ThemeContext.Provider
       value={{ themes: { darkTheme, lightTheme }, setTheme }}

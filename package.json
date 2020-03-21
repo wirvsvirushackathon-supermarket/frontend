@@ -34,6 +34,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/date-fns": "^2.6.0",
     "@types/google-map-react": "^1.1.5",
     "@types/react": "^16.9.25",
     "@typescript-eslint/eslint-plugin": "^2.24.0",
@@ -64,8 +65,10 @@
     "@types/use-resize-observer": "^6.0.0",
     "clsx": "^1.1.0",
     "components": "^0.1.0",
+    "date-fns": "^2.11.0",
     "env": "0.0.2",
     "google-map-react": "^1.1.7",
+    "parse-iso-duration": "^1.1.0",
     "providers": "^0.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
