@@ -5,18 +5,19 @@ import { Drawer, CssBaseline, Divider } from '@material-ui/core'
 import { useSideDrawerStyles } from './use-side-drawer-styles'
 
 export type SideDrawerProps = {
-  primaryMenu: FunctionComponent
+  PrimaryMenu: FunctionComponent
 }
 
 export const SideDrawer: FunctionComponent<SideDrawerProps> = ({
-  primaryMenu
+  PrimaryMenu
 }) => {
+  const minExpandedWidth = 800
   const classes = useSideDrawerStyles()
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(window.innerWidth >= minExpandedWidth)
   const { ref } = useResizeObserver({
     onResize: ({ width }) => {
-      if (width >= 800 && !open) setOpen(true)
-      if (width < 800 && open) setOpen(false)
+      if (width >= minExpandedWidth && !open) setOpen(true)
+      if (width < minExpandedWidth && open) setOpen(false)
     }
   })
   return (
@@ -38,7 +39,7 @@ export const SideDrawer: FunctionComponent<SideDrawerProps> = ({
       >
         <div className={classes.toolbar} />
         <Divider />
-        {primaryMenu}
+        <PrimaryMenu />
       </Drawer>
     </div>
   )

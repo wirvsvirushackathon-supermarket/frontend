@@ -15,7 +15,7 @@ const MainMenu: FunctionComponent = () => (
 export const Dashboard: FunctionComponent = () => {
   return (
     <div>
-      <SideDrawer primaryMenu={MainMenu} />
+      <SideDrawer PrimaryMenu={MainMenu} />
     </div>
   )
 }
