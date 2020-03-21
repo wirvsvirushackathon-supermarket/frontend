@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react'
 import clsx from 'clsx'
 import useResizeObserver from 'use-resize-observer'
 import { Drawer, CssBaseline, Divider } from '@material-ui/core'
+import { useAppState } from '../../providers'
 import { useSideDrawerStyles } from './use-side-drawer-styles'
 
 export type SideDrawerProps = {
@@ -11,30 +12,18 @@ export type SideDrawerProps = {
 export const SideDrawer: FunctionComponent<SideDrawerProps> = ({
   PrimaryMenu
 }) => {
-  const minExpandedWidth = 800
   const classes = useSideDrawerStyles()
-  const [open, setOpen] = React.useState(window.innerWidth >= minExpandedWidth)
-  const { ref } = useResizeObserver({
-    onResize: ({ width }) => {
-      if (width >= minExpandedWidth && !open) setOpen(true)
-      if (width < minExpandedWidth && open) setOpen(false)
-    }
-  })
+  const { state: appState } = useAppState()
   return (
-    // @ts-ignore
-    <div ref={ref} className={classes.root}>
+    <div className={classes.root}>
       <CssBaseline />
       <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open
-        })}
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={appState.sidebarVisible}
         classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open
-          })
+          paper: classes.drawerPaper
         }}
       >
         <div className={classes.toolbar} />
