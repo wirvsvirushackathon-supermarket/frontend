@@ -8,7 +8,7 @@ export type GoogleMapsServices = {
   placesService: google.maps.places.PlacesService
 }
 export const useMapServices = (): GoogleMapsServices => {
-  const { state, setAppState } = useAppState()
+  const { state } = useAppState()
   const { lat, lon } = state.userLocation
   const [services, setServices] = useState<any>(null)
   useEffect(() => {

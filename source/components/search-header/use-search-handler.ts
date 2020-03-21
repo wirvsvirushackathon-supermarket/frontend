@@ -19,8 +19,6 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
       type: state.placeApiSearchType,
       radius: 1000
     }
-    console.log(request)
-
     // remove old if any
     const newMarkers: google.maps.Marker[] = []
     if (
@@ -71,6 +69,7 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
         }
       })
     }
+    // eslint-disable-next-line consistent-return
     return () => {
       if (newMarkers.length) {
         for (let i = 0; i < newMarkers.length; i += 1) {
