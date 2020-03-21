@@ -6,7 +6,6 @@ import Divider from '@material-ui/core/Divider'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
-import DirectionsIcon from '@material-ui/icons/Directions'
 import {
   useToggleSideBarHandler,
   useMapsApi,
@@ -55,7 +54,7 @@ export const SearchHeader: FunctionComponent = () => {
         className={classes.input}
         placeholder="Search Google Maps"
         inputProps={{ 'aria-label': 'search google maps' }}
-        onKeyUp={e => {
+        onKeyUp={(e): void => {
           const request = {
             name: e.target.value,
             fields: ['name', 'geometry'],
@@ -68,6 +67,7 @@ export const SearchHeader: FunctionComponent = () => {
           }
           placesService.nearbySearch(request, (results, status) => {
             if (status === 'OK') {
+              // eslint-disable-next-line no-console
               console.log(results)
             }
           })

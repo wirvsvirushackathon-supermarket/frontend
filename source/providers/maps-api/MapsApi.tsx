@@ -28,12 +28,15 @@ export const MapsApiProvider: FunctionComponent = props => {
           const ID = 'MapsApiID'
           mapDummyDiv.id = ID
           document.body.appendChild(mapDummyDiv)
+          // eslint-disable-next-line no-undef
           const map = new google.maps.Map(document.getElementById(ID))
           setServices({
+            // eslint-disable-next-line no-undef
             placesService: new google.maps.places.PlacesService(map)
           })
         })
         .catch(e => {
+          // eslint-disable-next-line no-console
           console.log(e)
         })
     }

@@ -24,7 +24,7 @@ type AppState = {
   }
 }
 
-const localStorageState = () => {
+const localStorageState = (): any => {
   const data = localStorage.getItem(LOCAL_STORAGE_KEY)
   if (typeof data === 'string') {
     return JSON.parse(data)
