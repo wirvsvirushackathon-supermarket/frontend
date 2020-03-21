@@ -22,6 +22,7 @@ const lightTheme = createMuiTheme({
 })
 
 const ThemeContext = createContext({
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setTheme: (_theme: Theme) => {},
   themes: { darkTheme, lightTheme }
 })
@@ -37,4 +38,5 @@ export const ThemeProvider: FunctionComponent = ({ children }) => {
   )
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useTheme = () => useContext(ThemeContext)
