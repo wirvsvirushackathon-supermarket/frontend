@@ -2,7 +2,8 @@ import React, {
   createContext,
   useState,
   FunctionComponent,
-  useContext
+  useContext,
+  useEffect
 } from 'react'
 
 const LOCAL_STORAGE_KEY = 'APP_STATE'
@@ -15,6 +16,14 @@ const defaultState = {
   }
 }
 
+type AppState = {
+  sidebarVisible: boolean
+  userLocation?: {
+    lat: number
+    lon: number
+  }
+}
+
 const localStorageState = () => {
   const data = localStorage.getItem(LOCAL_STORAGE_KEY)
   if (typeof data === 'string') {
@@ -24,8 +33,6 @@ const localStorageState = () => {
 }
 
 const defaultStoredState = localStorageState() as typeof defaultState
-
-type AppState = typeof defaultState
 
 const AppStateContext = createContext({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -41,18 +48,20 @@ export const AppStateProvider: FunctionComponent = props => {
     setAppState({ ...newState })
   }
 
-  navigator.geolocation.getCurrentPosition(
-    ({ coords }) => {
-      persistentSetter({
-        ...state,
-        userLocation: {
-          lat: coords.latitude,
-          lon: coords.longitude
-        }
-      })
-    },
-    () => {}
-  )
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => {
+        persistentSetter({
+          ...state,
+          userLocation: {
+            lat: coords.latitude,
+            lon: coords.longitude
+          }
+        })
+      },
+      () => {}
+    )
+  }, [])
 
   return (
     <AppStateContext.Provider
