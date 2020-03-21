@@ -1,12 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useMapsApi, useAppState } from '../../providers'
 
 export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
   const { placesService, mapService } = useMapsApi()
   const { state } = useAppState()
-  const [markers, setMarkers] = useState<google.maps.Marker[]>([])
-  return (e): void => {
-    const { value } = e.target as HTMLInputElement
+  const [value, setValue] = useState<string>('')
+  const [debouncer, setDebouncer] = useState<any>(null)
+  useEffect(() => {
     const request = {
       name: value,
       fields: ['name', 'geometry'],
@@ -18,12 +18,7 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
       radius: 1000
     }
     // remove old if any
-    if (markers.length) {
-      for (let i = 0; i < markers.length; i += 1) {
-        markers[i].setMap(null)
-      }
-      setMarkers([])
-    }
+    const newMarkers: google.maps.Marker[] = []
     if (
       placesService &&
       typeof placesService.nearbySearch === 'function' &&
@@ -31,7 +26,6 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
     ) {
       placesService.nearbySearch(request, (results, status) => {
         if (status === 'OK' && results.length) {
-          const newMarkers = []
           for (let i = 0; i < results.length; i += 1) {
             if (
               results[i].geometry?.location.lat &&
@@ -48,9 +42,24 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
               newMarkers.push(marker)
             }
           }
-          setMarkers([...newMarkers])
         }
       })
     }
+    return () => {
+      if (newMarkers.length) {
+        for (let i = 0; i < newMarkers.length; i += 1) {
+          newMarkers[i].setMap(null)
+        }
+      }
+    }
+  }, [value])
+  return (e): void => {
+    e.persist()
+    clearTimeout(debouncer)
+    setDebouncer(
+      setTimeout(() => {
+        setValue((e.target as HTMLInputElement).value || '')
+      }, 200)
+    )
   }
 }
