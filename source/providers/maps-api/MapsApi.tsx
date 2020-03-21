@@ -18,39 +18,55 @@ export const MapsApiProvider: FunctionComponent<{
   lat: number
   lon: number
 }> = ({ lat = 0, lon = 0, ...rest }) => {
+  console.log(lat, lon)
+
   const [services, setServices] = useState<any>(null)
   const mapRef = createRef()
   useEffect(() => {
-    if (services === null && mapRef.current !== null) {
-      const mapOptions = {
-        center: {
-          lat,
-          lng: lon
-        },
-        zoom: 4
-      }
-      const loader = new Loader({
-        apiKey: env.googleAPiKEy,
-        version: 'weekly',
-        libraries: ['places']
-      })
-      loader
-        .load()
-        .then(() => {
-          // eslint-disable-next-line no-undef
-          const map = new google.maps.Map(mapRef.current, mapOptions)
-          setServices({
-            // eslint-disable-next-line no-undef
-            placesService: new google.maps.places.PlacesService(map),
-            mapElement: mapRef
-          })
-        })
-        .catch(e => {
-          // eslint-disable-next-line no-console
-          console.log(e)
-        })
+    const divId = 'map'
+    const mapDummyDiv = document.createElement('div')
+    mapDummyDiv.id = divId
+    document.body.appendChild(mapDummyDiv)
+    const mapOptions = {
+      center: {
+        lat,
+        lng: lon
+      },
+      zoom: 4
     }
-  }, [services, mapRef])
+    const loader = new Loader({
+      apiKey: env.googleAPiKEy,
+      version: 'weekly',
+      libraries: ['places']
+    })
+    loader
+      .load()
+      .then(() => {
+        // eslint-disable-next-line no-undef
+        const map = new google.maps.Map(
+          document.getElementById(divId),
+          mapOptions
+        )
+        const mapDiv = document.getElementById(divId)
+        setTimeout(() => {
+          mapDiv.style.position = 'fixed'
+          mapDiv.style.top = '0'
+          mapDiv.style.left = '0'
+          mapDiv.style.bottom = '0'
+          mapDiv.style.right = '0'
+        }, 500)
+        setServices({
+          // eslint-disable-next-line no-undef
+          placesService: new google.maps.places.PlacesService(map),
+          mapElement: mapRef
+        })
+        console.log(mapDiv?.style)
+      })
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.log(e)
+      })
+  }, [])
 
   return (
     <>

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react'
 import { List, ListItem, ListItemText } from '@material-ui/core'
 import { useTheme } from '../../providers/theme/Theme'
 import { SideDrawer, SearchHeader } from '../../components'
-import { MapsApiProvider } from '../../providers'
+import { MapsApiProvider, useAppState } from '../../providers'
 
 const MainMenu: FunctionComponent = () => {
   const { setTheme, themes } = useTheme()
@@ -20,9 +20,13 @@ const MainMenu: FunctionComponent = () => {
 }
 
 export const Dashboard: FunctionComponent = () => {
+  const { state } = useAppState()
   return (
     <div>
-      <MapsApiProvider>
+      <MapsApiProvider
+        lat={state.userLocation.lat}
+        lon={state.userLocation.lat}
+      >
         <SideDrawer PrimaryMenu={MainMenu} />
         <SearchHeader />
       </MapsApiProvider>
