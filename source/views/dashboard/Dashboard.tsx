@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react'
 import { List, ListItem, ListItemText } from '@material-ui/core'
-import { SideDrawer } from '../../components'
+import { SideDrawer, Map } from '../../components'
 
 const MainMenu: FunctionComponent = () => (
   <List>
@@ -16,6 +16,7 @@ export const Dashboard: FunctionComponent = () => {
   return (
     <div>
       <SideDrawer PrimaryMenu={MainMenu} />
+      <Map />
     </div>
   )
 }
