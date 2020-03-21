@@ -23,10 +23,7 @@ export const Home: FunctionComponent = () => {
   const { state } = useAppState()
   return (
     <div>
-      <MapsApiProvider
-        lat={state.userLocation.lat}
-        lon={state.userLocation.lat}
-      >
+      <MapsApiProvider>
         <SideDrawer PrimaryMenu={MainMenu} />
         <SearchHeader />
       </MapsApiProvider>

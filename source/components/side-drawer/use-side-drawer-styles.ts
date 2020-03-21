@@ -37,6 +37,11 @@ export const useSideDrawerStyles = makeStyles((theme: Theme) =>
     toolbar: {
       marginTop: '48px'
     },
+    logo: {
+      maxWidth: '140px',
+      marginTop: theme.spacing(2),
+      marginLeft: theme.spacing(2)
+    },
     drawerHeader: {
       display: 'flex',
       alignItems: 'center',

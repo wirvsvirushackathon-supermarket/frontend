@@ -24,14 +24,25 @@ const lightTheme = createMuiTheme({
 const ThemeContext = createContext({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setTheme: (_theme: Theme) => {},
+  currentTheme: lightTheme,
   themes: { darkTheme, lightTheme }
 })
 
 export const ThemeProvider: FunctionComponent = ({ children }) => {
-  const [theme, setTheme] = useState<Theme>(lightTheme)
+  const defaultTheme =
+    window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? darkTheme
+      : lightTheme
+
+  const [theme, setTheme] = useState<Theme>(defaultTheme)
   return (
     <ThemeContext.Provider
-      value={{ themes: { darkTheme, lightTheme }, setTheme }}
+      value={{
+        themes: { darkTheme, lightTheme },
+        setTheme,
+        currentTheme: theme
+      }}
     >
       <MaterialThemeProvider theme={theme}>{children}</MaterialThemeProvider>
     </ThemeContext.Provider>
