@@ -9,15 +9,15 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
 
   useEffect(() => {
     if (!mapService) return
-    const { lat, lng } = mapService.getCenter()
     const request = {
       name: value,
       location: {
-        lat: lat(),
-        lng: lng()
+        lat: mapService.getCenter().lat(),
+        lng: mapService.getCenter().lng()
       },
       type: state.placeApiSearchType,
-      radius: 1000
+      // radius: 50,
+      rankBy: 1
     }
     // remove old if any
     const newMarkers: google.maps.Marker[] = []
@@ -28,16 +28,21 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
     ) {
       placesService.nearbySearch(request, (results, status) => {
         if (status === 'OK' && results.length) {
+          const bounds = new google.maps.LatLngBounds()
           for (let i = 0; i < results.length; i += 1) {
             if (
               results[i].geometry?.location.lat &&
               results[i].geometry?.location.lat
             ) {
+              const lat = results[i].geometry?.location.lat()!
+              const lon = results[i].geometry?.location.lng()!
+              const pos = {
+                lat,
+                lng: lon
+              }
+              if (i <= 10) bounds.extend(pos)
               const marker = new google.maps.Marker({
-                position: {
-                  lat: results[i].geometry?.location.lat()!,
-                  lng: results[i].geometry?.location.lng()!
-                }
+                position: pos
                 // map: mapService,
               })
               marker.addListener('click', () => {
@@ -63,6 +68,8 @@ export const useSearchHandler = (): ((e: KeyboardEvent) => void) => {
                 })
               })
               marker.setMap(mapService)
+              mapService.fitBounds(bounds)
+              mapService.panToBounds(bounds)
               newMarkers.push(marker)
             }
           }
