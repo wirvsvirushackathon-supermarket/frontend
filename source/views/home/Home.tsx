@@ -1,13 +1,36 @@
 import React, { FunctionComponent } from 'react'
-import { Button, Typography } from '@material-ui/core'
+import { List, ListItem, ListItemText } from '@material-ui/core'
+import { useTheme } from '../../providers/theme/Theme'
+import { SideDrawer, SearchHeader, Card } from '../../components'
+import { MapsApiProvider, useAppState } from '../../providers'
 
-const { wrap } = require('./home.css')
+const MainMenu: FunctionComponent = () => {
+  const { setTheme, themes } = useTheme()
 
-export const Home: FunctionComponent = () => (
-  <div className={wrap}>
-    <Typography variant="h4" component="h1" gutterBottom>
-      A VERY FANCY LANGING PAGE
-    </Typography>
-    <Button href="/dashboard">Go to dashboard</Button>
-  </div>
-)
+  return (
+    <List>
+      <ListItem button onClick={(): void => setTheme(themes.lightTheme)}>
+        <ListItemText primary="Light theme" />
+      </ListItem>
+      <ListItem button onClick={(): void => setTheme(themes.darkTheme)}>
+        <ListItemText primary="Dark theme" />
+      </ListItem>
+    </List>
+  )
+}
+
+export const Home: FunctionComponent = () => {
+  const { state } = useAppState()
+  return (
+    <div>
+      <MapsApiProvider
+        lat={state.userLocation.lat}
+        lon={state.userLocation.lat}
+      >
+        <SideDrawer PrimaryMenu={MainMenu} />
+        <SearchHeader />
+      </MapsApiProvider>
+      <Card />
+    </div>
+  )
+}
