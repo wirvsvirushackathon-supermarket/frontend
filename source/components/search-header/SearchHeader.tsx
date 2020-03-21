@@ -7,7 +7,11 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import SearchIcon from '@material-ui/icons/Search'
 import DirectionsIcon from '@material-ui/icons/Directions'
-import { useToggleSideBarHandler } from '../../providers'
+import {
+  useToggleSideBarHandler,
+  useMapsApi,
+  useAppState
+} from '../../providers'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,13 +39,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const SearchHeader: FunctionComponent = () => {
   const classes = useStyles()
-  const test = useToggleSideBarHandler()
+  const { placesService } = useMapsApi()
+  const { state } = useAppState()
+  const toggleSidebar = useToggleSideBarHandler()
   return (
     <Paper component="form" className={classes.root}>
       <IconButton
         className={classes.iconButton}
         aria-label="menu"
-        onClick={test}
+        onClick={toggleSidebar}
       >
         <MenuIcon />
       </IconButton>
@@ -49,6 +55,23 @@ export const SearchHeader: FunctionComponent = () => {
         className={classes.input}
         placeholder="Search Google Maps"
         inputProps={{ 'aria-label': 'search google maps' }}
+        onKeyUp={e => {
+          const request = {
+            name: e.target.value,
+            fields: ['name', 'geometry'],
+            location: {
+              lat: state.userLocation.lat,
+              lng: state.userLocation.lon
+            },
+            type: ['grocery_or_supermarket', 'supermarket'],
+            radius: '10000'
+          }
+          placesService.nearbySearch(request, (results, status) => {
+            if (status === 'OK') {
+              console.log(results)
+            }
+          })
+        }}
       />
       <IconButton
         type="submit"
@@ -58,13 +81,6 @@ export const SearchHeader: FunctionComponent = () => {
         <SearchIcon />
       </IconButton>
       <Divider className={classes.divider} orientation="vertical" />
-      <IconButton
-        color="primary"
-        className={classes.iconButton}
-        aria-label="directions"
-      >
-        <DirectionsIcon />
-      </IconButton>
     </Paper>
   )
 }

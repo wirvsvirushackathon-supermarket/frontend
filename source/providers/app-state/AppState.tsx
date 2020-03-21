@@ -23,7 +23,7 @@ const localStorageState = () => {
   return data
 }
 
-const defaultStoredState = localStorageState()
+const defaultStoredState = localStorageState() as typeof defaultState
 
 type AppState = typeof defaultState
 
