@@ -4,12 +4,12 @@ import env from '../../env'
 import { useAppState } from '../app-state'
 
 export type GoogleMapsServices = {
-  mapService: google.maps.Map
-  placesService: google.maps.places.PlacesService
+  mapService?: google.maps.Map
+  placesService?: google.maps.places.PlacesService
 }
 export const useMapServices = (): GoogleMapsServices => {
   const { state } = useAppState()
-  const { lat, lon } = state.userLocation
+  const { lat, lon } = state.userLocation!
   const [services, setServices] = useState<any>(null)
   useEffect(() => {
     const divId = 'map'

@@ -15,7 +15,8 @@ const defaultState = {
     lon: 0
   },
   placeApiSearchType: 'grocery_or_supermarket',
-  currentPlaceApiResult: null
+  currentPlaceApiResult: undefined,
+  visibleMarkers: []
 }
 
 type AppState = {
@@ -26,6 +27,7 @@ type AppState = {
   }
   placeApiSearchType: string
   currentPlaceApiResult?: google.maps.places.PlaceResult
+  visibleMarkers: google.maps.Marker[]
 }
 
 const localStorageState = (): any => {
@@ -41,31 +43,34 @@ const defaultStoredState = localStorageState() as typeof defaultState
 const AppStateContext = createContext({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   setAppState: (_State: AppState) => {},
-  state: defaultStoredState || defaultState
+  state: (defaultStoredState || defaultState) as AppState
 })
 
 export const AppStateProvider: FunctionComponent = props => {
   const [state, setAppState] = useState<AppState>(defaultState)
 
   const persistentSetter = (newState: AppState): void => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newState))
+    const { visibleMarkers: _s, ...rest } = newState
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(rest))
     setAppState({ ...newState })
   }
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      ({ coords }) => {
-        persistentSetter({
-          ...state,
-          userLocation: {
-            lat: coords.latitude,
-            lon: coords.longitude
-          }
-        })
-      },
-      () => {}
-    )
-  }, [])
+  // useEffect(() => {
+  navigator.geolocation.getCurrentPosition(
+    ({ coords }) => {
+      console.log('some')
+
+      persistentSetter({
+        ...state,
+        userLocation: {
+          lat: coords.latitude,
+          lon: coords.longitude
+        }
+      })
+    },
+    () => {}
+  )
+  // }, [])
 
   return (
     <AppStateContext.Provider
