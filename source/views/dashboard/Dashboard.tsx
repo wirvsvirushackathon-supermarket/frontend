@@ -8,10 +8,10 @@ const MainMenu: FunctionComponent = () => {
 
   return (
     <List>
-      <ListItem button onClick={() => setTheme(themes.lightTheme)}>
+      <ListItem button onClick={(): void => setTheme(themes.lightTheme)}>
         <ListItemText primary="Light theme" />
       </ListItem>
-      <ListItem button onClick={() => setTheme(themes.darkTheme)}>
+      <ListItem button onClick={(): void => setTheme(themes.darkTheme)}>
         <ListItemText primary="Dark theme" />
       </ListItem>
     </List>
