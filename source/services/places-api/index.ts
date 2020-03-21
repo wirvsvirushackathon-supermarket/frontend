@@ -1,3 +1,5 @@
-const baseUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
+// const baseUrl = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json'
 
-export const searchString = () => {}
+// export const searchString = (qs: string) => {
+
+// }

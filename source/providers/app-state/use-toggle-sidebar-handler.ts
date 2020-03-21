@@ -1,8 +1,8 @@
 import { useAppState } from './AppState'
 
-export const useToggleSideBarHandler = () => {
+export const useToggleSideBarHandler = (): (() => boolean) => {
   const { setAppState, state } = useAppState()
-  return () => {
+  return (): boolean => {
     setAppState({
       ...state,
       sidebarVisible: !state.sidebarVisible

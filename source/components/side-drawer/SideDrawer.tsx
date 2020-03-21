@@ -1,6 +1,4 @@
 import React, { FunctionComponent } from 'react'
-import clsx from 'clsx'
-import useResizeObserver from 'use-resize-observer'
 import { Drawer, CssBaseline, Divider } from '@material-ui/core'
 import { useAppState } from '../../providers'
 import { useSideDrawerStyles } from './use-side-drawer-styles'
