@@ -19,6 +19,10 @@ export const useClickHandler = (): ((val: string) => void) => {
     }
     if (value.length >= 2) {
       helpers.searchAndAddMarkers(request, onClick)
+    } else {
+      console.log('eeee')
+
+      helpers.clearMarkers()
     }
   }
 }

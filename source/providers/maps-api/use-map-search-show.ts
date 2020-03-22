@@ -10,7 +10,7 @@ export const useMapSearchShow = ({
   mapState: GoogleMapsState
   setMapState: (_state: GoogleMapsState) => void
 }) => {
-  const clearMarkers = useClearMarkers({ mapState, setMapState, services })
+  const clearMarkers = useClearMarkers({ mapState, services })
   return (
     request: google.maps.places.PlaceSearchRequest,
     onMarkerClick: (result: google.maps.places.PlaceResult) => any
@@ -46,7 +46,10 @@ export const useMapSearchShow = ({
           }
         }
       }
-      setMapState({ ...mapState, displayedMarkers: [...newMarkers] })
+      setMapState({
+        ...mapState,
+        displayedMarkers: [...mapState.displayedMarkers, ...newMarkers]
+      })
     })
   }
 }
