@@ -20,7 +20,8 @@ import {
   SearchHeader,
   Card,
   Overlay,
-  About
+  About,
+  RegistrationForm
 } from '../../components'
 import { MapsApiProvider, useAppState } from '../../providers'
 
@@ -77,20 +78,32 @@ const MainMenu: FunctionComponent = () => {
 
 export const Home: FunctionComponent = () => {
   const location = useLocation()
+  const conf = [
+    {
+      path: '/overlay/info',
+      title: 'So funktioniert es',
+      component: <About />
+    },
+    {
+      path: '/overlay/register',
+      title: 'Filiale anmelden',
+      component: <RegistrationForm />
+    }
+  ]
   return (
     <div>
       <MapsApiProvider>
         <SideDrawer PrimaryMenu={MainMenu} />
         <SearchHeader />
-        <Overlay
-          show={location.pathname === '/overlay/info'}
-          headerTitle="So funktioniert es"
-        >
-          <About />
-        </Overlay>
-        <Overlay headerTitle="Für Filialbesitzer">
-          <p>some</p>
-        </Overlay>
+        {conf.map(({ path, title, component }) => (
+          <Overlay
+            key={path}
+            show={location.pathname === path}
+            headerTitle={title}
+          >
+            {component}
+          </Overlay>
+        ))}
       </MapsApiProvider>
       <Card />
     </div>
