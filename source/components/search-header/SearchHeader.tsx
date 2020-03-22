@@ -57,7 +57,7 @@ export const SearchHeader: FunctionComponent = () => {
       </IconButton>
       <InputBase
         className={classes.input}
-        placeholder="Suche nach einem Supermarket"
+        placeholder="Suche nach einem Supermarkt"
         inputProps={{ 'aria-label': 'search google maps' }}
         onKeyUp={e => setValue((e.target as HTMLInputElement).value)}
       />
