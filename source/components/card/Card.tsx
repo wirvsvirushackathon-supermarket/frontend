@@ -21,6 +21,8 @@ import { SlotList } from '../slot-list'
 import { slots } from '../mocked-api'
 import { PersonSlider } from '../person-slider/PersonSlider'
 import { TextField } from '../text-field'
+import { createUser } from '../../gql'
+import { useAppState } from '../../providers'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -58,7 +60,13 @@ export const Card: FunctionComponent = () => {
   const [selectedName, setSelectedName] = useState('')
   const [selectedSlot, setSelectedSlot] = useState<string>()
   const [isFormValid, setIsFormValid] = useState(false)
+  const [isHidden, setIsHidden] = useState(false)
+  const { state } = useAppState()
+  const { currentPlaceApiResult } = state
 
+  useEffect(() => {
+    setIsHidden(false)
+  }, [currentPlaceApiResult])
   useEffect(() => {
     setIsFormValid(selectedName.length > 0 && selectedSlot)
   }, [selectedName, selectedSlot])
@@ -84,7 +92,12 @@ export const Card: FunctionComponent = () => {
     )
   }
 
-  const handleFormSubmit = (): void => {
+  const handleFormSubmit = async (): void => {
+    // const res = await createUser({
+    //   firstName: 'john',
+    //   lastName: 'doe',
+    //   uuid: 'meh'
+    // })
     if (isFormValid) {
       console.log('DAY', selectedDay)
       console.log('SLOT', selectedSlot)
@@ -93,6 +106,7 @@ export const Card: FunctionComponent = () => {
     }
   }
 
+  if (!currentPlaceApiResult || isHidden) return null
   return (
     <MaterialCard className={classes.root}>
       <CardActionArea
@@ -102,17 +116,23 @@ export const Card: FunctionComponent = () => {
         <CardMedia
           component="img"
           height="120"
-          image="https://www.kaufda.de/insights/shared/content/uploads/2018/05/Unterschied-Supermarkt-Discounter-1200x500-1526998833.jpg"
+          image={currentPlaceApiResult.photos[0].getUrl()}
           title="Contemplative Reptile"
         />
         <CardContent>
           <Grid container>
             <Grid item xs={7}>
-              <Typography variant="subtitle1">Rewe Hauptbahnhof</Typography>
+              <Typography variant="subtitle1">
+                {currentPlaceApiResult!.name}
+              </Typography>
             </Grid>
             <Grid item xs={5}>
               <Typography variant="caption">
-                Straßenname 12 12345 Musterstadt
+                {currentPlaceApiResult!.address_components[1].long_name}
+                {` ${currentPlaceApiResult!.address_components[0].long_name}`}
+                <br />
+                {` ${currentPlaceApiResult!.address_components[6].long_name}`}
+                {` ${currentPlaceApiResult!.address_components[3].long_name}`}
               </Typography>
             </Grid>
           </Grid>
@@ -135,7 +155,9 @@ export const Card: FunctionComponent = () => {
           className={classes.closeButton}
           color="primary"
           aria-label="back"
-          onClick={(): void => alert('ICH BRAUCH NOCH LOGIK')}
+          onClick={(): void => {
+            setIsHidden(true)
+          }}
         >
           <CloseIcon />
         </Fab>
