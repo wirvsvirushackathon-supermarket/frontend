@@ -48,8 +48,9 @@ const localStorageState = (): any => {
   return data
 }
 
-const defaultStoredState = localStorageState() as typeof defaultState
-console.log(defaultStoredState)
+const defaultStoredState =
+  localStorageState() &&
+  ({ ...localStorageState(), visibleMarkers: [] } as typeof defaultState)
 
 const AppStateContext = createContext({
   // eslint-disable-next-line @typescript-eslint/no-empty-function

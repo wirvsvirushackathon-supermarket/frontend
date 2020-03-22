@@ -90,13 +90,7 @@ export const Card: FunctionComponent = () => {
     )
   }
 
-  const getHighestAvailability = (): number => {
-    // eslint-disable-next-line prefer-spread
-    return Math.max.apply(
-      Math,
-      getAllSlotsForASelectedDay().map(slot => slot.available)
-    )
-  }
+  const getHighestAvailability = (): number => 3
 
   const handleFormSubmit = async (): void => {
     if (isFormValid) {
@@ -117,6 +111,9 @@ export const Card: FunctionComponent = () => {
   }
 
   if (!currentPlaceApiResult || isHidden) return null
+
+  console.log(currentPlaceApiResult.photos[0].getUrl)
+
   return (
     <MaterialCard className={classes.root}>
       <CardActionArea
@@ -170,7 +167,10 @@ export const Card: FunctionComponent = () => {
           color="primary"
           aria-label="back"
           onClick={(): void => {
-            setIsHidden(true)
+            setAppState({
+              ...state,
+              currentPlaceApiResult: undefined
+            })
           }}
         >
           <CloseIcon />
