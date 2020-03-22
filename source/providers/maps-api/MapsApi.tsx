@@ -35,7 +35,8 @@ const defaultOpts: google.maps.MapOptions = {
   center: {
     lat: 52.52,
     lng: 13.4
-  }
+  },
+  disableDefaultUI: true
 }
 
 export const MapsApiProvider: FunctionComponent = props => {
