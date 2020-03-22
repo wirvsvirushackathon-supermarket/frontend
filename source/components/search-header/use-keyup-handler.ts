@@ -8,8 +8,9 @@ export const useKeyupHandler = (): ((val: string) => void) => {
   const [value, setValue] = useState<string>('')
   const onClick = useSearchResultClick()
   const [debouncer, setDebouncer] = useState<any>(null)
+  const [skip, setSkip] = useState(false)
   useEffect(() => {
-    if (!services.mapService) return
+    if (!services.mapService || skip) return
     const request = {
       name: value,
       location: {
@@ -22,15 +23,15 @@ export const useKeyupHandler = (): ((val: string) => void) => {
     if (value.length >= 2) {
       helpers.searchAndAddMarkers(request, onClick)
     } else {
-      console.log('rere')
-
       helpers.clearMarkers()
     }
   }, [value])
   return (val: string): void => {
     clearTimeout(debouncer)
+    setSkip(true)
     setDebouncer(
       setTimeout(() => {
+        setSkip(false)
         setValue(val)
       }, 200)
     )
