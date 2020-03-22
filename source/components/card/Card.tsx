@@ -18,7 +18,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { eachDayOfInterval, isSameDay } from 'date-fns'
 import { DaySelect } from '../day-select'
 import { SlotList } from '../slot-list'
-import { slots } from '../mocked-api'
+import { getRandomSlots } from '../mocked-api'
 import { PersonSlider } from '../person-slider/PersonSlider'
 import { TextField } from '../text-field'
 import { createUser } from '../../gql'
@@ -64,9 +64,13 @@ export const Card: FunctionComponent = () => {
   const { state } = useAppState()
   const { currentPlaceApiResult } = state
 
+  const maxSlots = Math.floor(Math.random() * 16) + 10
+  const slots = getRandomSlots(maxSlots)
+
   useEffect(() => {
     setIsHidden(false)
   }, [currentPlaceApiResult])
+
   useEffect(() => {
     setIsFormValid(selectedName.length > 0 && selectedSlot)
   }, [selectedName, selectedSlot])
