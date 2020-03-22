@@ -21,7 +21,8 @@ import {
   Card,
   Overlay,
   About,
-  RegistrationForm
+  RegistrationForm,
+  LoginForm
 } from '../../components'
 import { MapsApiProvider, useAppState } from '../../providers'
 
@@ -88,6 +89,11 @@ export const Home: FunctionComponent = () => {
       path: '/overlay/register',
       title: 'Filiale anmelden',
       component: <RegistrationForm />
+    },
+    {
+      path: '/overlay/login',
+      title: 'Login Filialbesitzer',
+      component: <LoginForm />
     }
   ]
   return (
