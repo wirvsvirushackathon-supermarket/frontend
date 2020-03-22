@@ -39,7 +39,7 @@ export const LoginForm: FunctionComponent = () => {
       <Divider />
       <Button>Login</Button>
       <Link href="/overlay/register">Registrieren</Link>
-      <Link href="/">Passwort vergessen</Link>
+      <Link href="/wip">Passwort vergessen</Link>
     </form>
   )
 }

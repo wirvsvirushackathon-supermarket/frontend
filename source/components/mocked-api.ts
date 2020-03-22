@@ -1,87 +1,27 @@
-export const slots = [
-  {
-    start: '2020-03-21T08:00:00',
-    slotSize: 'PT60M',
-    available: 3
-  },
-  {
-    start: '2020-03-21T09:00:00',
-    slotSize: 'PT60M',
-    available: 0
-  },
-  {
-    start: '2020-03-21T10:00:00',
-    slotSize: 'PT60M',
-    available: 5
-  },
-  {
-    start: '2020-03-21T11:00:00',
-    slotSize: 'PT60M',
-    available: 2
-  },
-  {
-    start: '2020-03-21T12:00:00',
-    slotSize: 'PT60M',
-    available: 1
-  },
-  {
-    start: '2020-03-22T08:00:00',
-    slotSize: 'PT60M',
-    available: 3
-  },
-  {
-    start: '2020-03-22T09:00:00',
-    slotSize: 'PT60M',
-    available: 4
-  },
-  {
-    start: '2020-03-23T08:00:00',
-    slotSize: 'PT60M',
-    available: 3
-  },
-  {
-    start: '2020-03-23T09:00:00',
-    slotSize: 'PT60M',
-    available: 4
-  },
-  {
-    start: '2020-03-24T08:00:00',
-    slotSize: 'PT60M',
-    available: 3
-  },
-  {
-    start: '2020-03-24T09:00:00',
-    slotSize: 'PT60M',
-    available: 4
-  },
-  {
-    start: '2020-03-25T08:00:00',
-    slotSize: 'PT60M',
-    available: 3
-  },
-  {
-    start: '2020-03-25T09:00:00',
-    slotSize: 'PT60M',
-    available: 4
-  },
-  {
-    start: '2020-03-26T08:00:00',
-    slotSize: 'PT60M',
-    available: 3
-  },
-  {
-    start: '2020-03-26T09:00:00',
-    slotSize: 'PT60M',
-    available: 4
-  },
-  {
-    start: '2020-03-27T08:00:00',
-    slotSize: 'PT60M',
-    available: 3
-  },
-  {
-    start: '2020-03-27T09:00:00',
-    slotSize: 'PT60M',
-    available: 4
-  }
-]
+import { eachDayOfInterval, add, format, setHours } from 'date-fns'
+
+export const getRandomSlots = (maxSlots: number): any => {
+  const week = eachDayOfInterval({
+    start: new Date(),
+    end: add(new Date(), { days: 6 })
+  })
+
+  const res = week.map(ele => {
+    let slotsForDay: any = []
+    for (let i = 0; i < Math.floor(Math.random() * 6) + 5; i += 1) {
+      slotsForDay = [
+        ...slotsForDay,
+        {
+          start: format(
+            add(setHours(ele, 8), { hours: i }),
+            "yyyy-MM-dd'T'hh:mm:ss"
+          ),
+          available: Math.floor(Math.random() * maxSlots) + 1,
+          slotSize: 'PT60M'
+        }
+      ]
+    }
+    return slotsForDay
+  })
+  return res.flat()
+}

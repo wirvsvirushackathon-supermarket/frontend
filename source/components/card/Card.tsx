@@ -19,7 +19,7 @@ import { eachDayOfInterval, isSameDay } from 'date-fns'
 import { useHistory } from 'react-router-dom'
 import { DaySelect } from '../day-select'
 import { SlotList } from '../slot-list'
-import { slots } from '../mocked-api'
+import { getRandomSlots } from '../mocked-api'
 import { PersonSlider } from '../person-slider/PersonSlider'
 import { TextField } from '../text-field'
 import { createUser, createBooking } from '../../gql'
@@ -54,6 +54,9 @@ const useStyles = makeStyles(() =>
 )
 
 export const Card: FunctionComponent = () => {
+  const [maxSlots] = useState(Math.floor(Math.random() * 16) + 10)
+  const [slots] = useState(getRandomSlots(maxSlots))
+
   const classes = useStyles()
   const [cardVisible, setCardVisible] = useState(false)
   const [selectedDay, setSelectedDay] = useState(new Date())
@@ -69,6 +72,7 @@ export const Card: FunctionComponent = () => {
   useEffect(() => {
     setIsHidden(false)
   }, [currentPlaceApiResult])
+
   useEffect(() => {
     setIsFormValid(selectedName.length > 0 && selectedSlot)
   }, [selectedName, selectedSlot])
@@ -200,6 +204,7 @@ export const Card: FunctionComponent = () => {
             <SlotList
               slots={getAllSlotsForASelectedDay()}
               onSlotSelected={setSelectedSlot}
+              maxSlots={maxSlots}
             />
           </Paper>
         </CardContent>
