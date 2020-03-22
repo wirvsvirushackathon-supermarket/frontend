@@ -1,22 +1,24 @@
-import { useAppState } from '../app-state'
-import { useMarkerClickHandler } from './use-marker-click-handler'
-import { GoogleMapsServices } from './use-map-services'
+import { useClearMarkers } from './use-map-clear-markers'
+import { GoogleMapsState, GoogleMapsServices } from '.'
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useMapSearchShow = ({
-  placesService,
-  mapService
-}: GoogleMapsServices) => {
-  const onMarkerClick = useMarkerClickHandler()
-  const { state, setAppState } = useAppState()
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  return (request: google.maps.places.PlaceSearchRequest) => {
-    if (!placesService || !mapService) return
-    for (let i = 0; i < state.visibleMarkers.length; i += 1) {
-      state.visibleMarkers[i].setMap(null)
-    }
+  mapState,
+  setMapState,
+  services
+}: {
+  services: GoogleMapsServices
+  mapState: GoogleMapsState
+  setMapState: (_state: GoogleMapsState) => void
+}) => {
+  const clearMarkers = useClearMarkers({ mapState, setMapState, services })
+  return (
+    request: google.maps.places.PlaceSearchRequest,
+    onMarkerClick: (result: google.maps.places.PlaceResult) => any
+  ) => {
+    clearMarkers()
+    if (!services.placesService) return
     const newMarkers: google.maps.Marker[] = []
-    placesService.nearbySearch(request, (results, status) => {
+    services.placesService.nearbySearch(request, (results, status) => {
       if (status === 'OK' && results.length) {
         const bounds = new google.maps.LatLngBounds()
         for (let i = 0; i < results.length; i += 1) {
@@ -34,22 +36,17 @@ export const useMapSearchShow = ({
             const marker = new google.maps.Marker({
               position: pos
             })
-            marker.addListener(
-              'click',
-              onMarkerClick.bind(null, {
-                placeId: results[i].place_id!,
-                lat,
-                lon
-              })
-            )
-            marker.setMap(mapService)
-            mapService.fitBounds(bounds)
-            mapService.panToBounds(bounds)
-            newMarkers.push(marker)
+            marker.addListener('click', onMarkerClick.bind(null, results[i]))
+            if (services.mapService) {
+              marker.setMap(services.mapService)
+              services.mapService.fitBounds(bounds)
+              services.mapService.panToBounds(bounds)
+              newMarkers.push(marker)
+            }
           }
         }
       }
-      setAppState({ ...state, visibleMarkers: [...newMarkers] })
+      setMapState({ ...mapState, displayedMarkers: [...newMarkers] })
     })
   }
 }
