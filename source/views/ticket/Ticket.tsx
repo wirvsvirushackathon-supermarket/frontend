@@ -24,11 +24,12 @@ const report = {
   code: 4789,
   name: 'Max Mustermann',
   storeAddress: 'Edeka Rees, Karlsruhe',
-  numberOfAdditionalPeople: 2
+  numberOfAdditionalPeople: '2'
 }
 
-const peopleNumber =
-  'Anzahl Begleitpersonen: ' + report.numberOfAdditionalPeople
+const peopleNumber = 'Anzahl Begleitpersonen: '.concat(
+  report.numberOfAdditionalPeople
+)
 
 export const Ticket: FunctionComponent = () => (
   <div className={wrap}>
