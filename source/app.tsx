@@ -13,7 +13,7 @@ export const App: FunctionComponent = () => (
           <Route exact path="/reservations">
             <ReservationOverview />
           </Route>
-          <Route exact path="/">
+          <Route>
             <Home />
           </Route>
         </BrowserRouter>
