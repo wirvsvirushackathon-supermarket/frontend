@@ -11,6 +11,7 @@ import {
   MainMenu
 } from '../../components'
 import { MapsApiProvider } from '../../providers'
+import { Ticket } from '../ticket'
 
 export const Home: FunctionComponent = () => {
   const location = useLocation()
@@ -29,6 +30,11 @@ export const Home: FunctionComponent = () => {
       path: '/overlay/login',
       title: 'Login Filialbesitzer',
       component: <LoginForm />
+    },
+    {
+      path: '/overlay/ticket',
+      title: 'Deine Reservierung',
+      component: <Ticket />
     }
   ]
   return (

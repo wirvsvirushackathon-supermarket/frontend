@@ -1,31 +1,37 @@
 .wrap {
-    text-align: center;
-    margin: auto;
-    width: 30%;
+  text-align: center;
+  margin: auto;
+  width: 30%;
 }
 
 .date {
-    background-color: #1976d2;
-    border-radius: 10px;
-    width: 40%;
-    margin: auto;
-    margin-top: 2%;
+  background-color: #1976d2;
+  border-radius: 10px;
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  margin-top: 2%;
 }
 
 .upperDate {
-    height: 70%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  height: 70%;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .lowerDate {
-    border-top: 1px dashed white;
-    height: 30%;
-    padding-top: 10px;
-    padding-bottom: 10px;
+  border-top: 1px dashed white;
+  height: 30%;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .time {
-    text-align: center;
-    margin-left: 5px;
+  text-align: center;
+  margin-left: 5px;
+}
+
+.logo {
+  max-width: 100px;
+  margin: 16px auto;
 }

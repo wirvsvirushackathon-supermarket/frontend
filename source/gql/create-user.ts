@@ -4,24 +4,27 @@ import env from '../env'
 export type CreateUserPayload = {
   firstName: string
   lastName: string
-  uuid: string
 }
 export const createUser = async ({
   firstName,
-  lastName,
-  uuid
+  lastName
 }: CreateUserPayload) => {
   const query = `
     mutation createUser {
     createUser(createUserInput:{
-      uuid: ${uuid}
-      surname: ${lastName}
-      lastname: ${firstName}
+      surname: "${lastName}"
+      name: "${firstName}"
     }) {
-      id
+      uuid
+      name
+      surname
     }
   }
 `
-  const rest = await request(env.gqlEndpoint, query)
-  console.log(res)
+  const res = await request(env.gqlEndpoint, query).catch(() => {})
+
+  const { uuid } = res.createUser
+  return { uuid, firstName, lastName } as CreateUserPayload & {
+    uuid: string
+  }
 }

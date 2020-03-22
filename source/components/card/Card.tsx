@@ -16,6 +16,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import CloseIcon from '@material-ui/icons/Close'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { eachDayOfInterval, isSameDay } from 'date-fns'
+import { useHistory } from 'react-router-dom'
 import { DaySelect } from '../day-select'
 import { SlotList } from '../slot-list'
 import { slots } from '../mocked-api'
@@ -62,6 +63,7 @@ export const Card: FunctionComponent = () => {
   const [isFormValid, setIsFormValid] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
   const { state } = useAppState()
+  const history = useHistory()
   const { currentPlaceApiResult } = state
 
   useEffect(() => {
@@ -93,12 +95,13 @@ export const Card: FunctionComponent = () => {
   }
 
   const handleFormSubmit = async (): void => {
-    // const res = await createUser({
-    //   firstName: 'john',
-    //   lastName: 'doe',
-    //   uuid: 'meh'
-    // })
     if (isFormValid) {
+      // const { uuid } = await createUser({
+      //   firstName: ' ',
+      //   lastName: selectedName
+      // })
+      history.push('/overlay/ticket')
+      // console.log(res)
       console.log('DAY', selectedDay)
       console.log('SLOT', selectedSlot)
       console.log('PERSONS', selectedPersons)

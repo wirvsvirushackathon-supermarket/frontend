@@ -12,10 +12,10 @@ import {
   ListItem,
   ListItemText
 } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
+import { Logo } from '../../components/logo'
 
-const { wrap, date, upperDate, lowerDate, time } = require('./ticket.css')
+const { date, upperDate, lowerDate, time, logo } = require('./ticket.css')
 
 const report = {
   reserverationTime: 30,
@@ -32,30 +32,16 @@ const peopleNumber = 'Anzahl Begleitpersonen: '.concat(
 )
 
 export const Ticket: FunctionComponent = () => (
-  <div className={wrap}>
-    <HeaderBar />
-    <Card>
-      <CardHeader title="Super, das hat geklappt!" />
-      <CardContent>
-        <Container>
-          <Typography variant="h4">QOODS</Typography>
-          <DateInfo />
-          <PersonInfo />
-        </Container>
-      </CardContent>
-    </Card>
-  </div>
-)
-
-const HeaderBar: FunctionComponent = () => (
-  <AppBar position="static">
-    <Toolbar>
-      <IconButton href="/">
-        <CloseIcon />
-      </IconButton>
-      <Typography variant="h6">Deine Reservierung</Typography>
-    </Toolbar>
-  </AppBar>
+  <Container>
+    <Typography style={{ textAlign: 'center' }} variant="h6">
+      Super, das hat geklappt!
+    </Typography>
+    <div className={logo}>
+      <Logo />
+    </div>
+    <DateInfo />
+    <PersonInfo />
+  </Container>
 )
 
 const DateInfo: FunctionComponent = () => (
