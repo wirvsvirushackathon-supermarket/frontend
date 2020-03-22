@@ -53,6 +53,9 @@ const useStyles = makeStyles(() =>
 )
 
 export const Card: FunctionComponent = () => {
+  const [maxSlots] = useState(Math.floor(Math.random() * 16) + 10)
+  const [slots] = useState(getRandomSlots(maxSlots))
+
   const classes = useStyles()
   const [cardVisible, setCardVisible] = useState(false)
   const [selectedDay, setSelectedDay] = useState(new Date())
@@ -63,9 +66,6 @@ export const Card: FunctionComponent = () => {
   const [isHidden, setIsHidden] = useState(false)
   const { state } = useAppState()
   const { currentPlaceApiResult } = state
-
-  const maxSlots = Math.floor(Math.random() * 16) + 10
-  const slots = getRandomSlots(maxSlots)
 
   useEffect(() => {
     setIsHidden(false)
@@ -194,6 +194,7 @@ export const Card: FunctionComponent = () => {
             <SlotList
               slots={getAllSlotsForASelectedDay()}
               onSlotSelected={setSelectedSlot}
+              maxSlots={maxSlots}
             />
           </Paper>
         </CardContent>

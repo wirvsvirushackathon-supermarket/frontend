@@ -23,5 +23,5 @@ export const getRandomSlots = (maxSlots: number): any => {
     }
     return slotsForDay
   })
-  return res
+  return res.flat()
 }

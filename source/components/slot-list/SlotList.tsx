@@ -7,7 +7,6 @@ import { format, add, isSameMinute } from 'date-fns'
 import parseIsoDuration from 'parse-iso-duration'
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
-import { slots as MockedSlots } from '../mocked-api'
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -18,11 +17,12 @@ const useStyles = makeStyles(() =>
 )
 
 type Props = {
-  slots: typeof MockedSlots
+  slots: any
   onSlotSelected: (param: string) => void
+  maxSlots: number
 }
 
-export const SlotList: FC<Props> = ({ slots, onSlotSelected }) => {
+export const SlotList: FC<Props> = ({ slots, onSlotSelected, maxSlots }) => {
   const classes = useStyles()
   const [selected, setSelected] = useState<string>()
 
@@ -51,7 +51,7 @@ export const SlotList: FC<Props> = ({ slots, onSlotSelected }) => {
                 'HH:mm'
               )}`}
             />
-            {slot.available}&nbsp;
+            {maxSlots - slot.available}/{maxSlots}&nbsp;
             <ListItemIcon>
               <PeopleAltIcon />
             </ListItemIcon>
