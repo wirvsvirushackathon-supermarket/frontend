@@ -17,6 +17,19 @@ import AccessTimeIcon from '@material-ui/icons/AccessTime'
 
 const { wrap, date, upperDate, lowerDate, time } = require('./ticket.css')
 
+const report = {
+  reserverationTime: 30,
+  reserverationStartTime: '13:30',
+  reserverationEndTime: '14:00',
+  code: 4789,
+  name: 'Max Mustermann',
+  storeAddress: 'Edeka Rees, Karlsruhe',
+  numberOfAdditionalPeople: 2
+}
+
+const peopleNumber =
+  'Anzahl Begleitpersonen: ' + report.numberOfAdditionalPeople
+
 export const Ticket: FunctionComponent = () => (
   <div className={wrap}>
     <HeaderBar />
@@ -48,7 +61,7 @@ const DateInfo: FunctionComponent = () => (
   <Container maxWidth="xl">
     <div className={date}>
       <div className={upperDate}>
-        <Typography variant="h6">30</Typography>
+        <Typography variant="h6">{report.reserverationTime}</Typography>
         <Typography>MIN</Typography>
         <div
           style={{
@@ -58,11 +71,13 @@ const DateInfo: FunctionComponent = () => (
           }}
         >
           <AccessTimeIcon fontSize="small" />
-          <div className={time}>13:30 - 14:00</div>
+          <div className={time}>
+            {report.reserverationStartTime} - {report.reserverationEndTime}
+          </div>
         </div>
       </div>
       <div className={lowerDate}>
-        <Typography variant="h6">4789</Typography>
+        <Typography variant="h6">{report.code}</Typography>
         <Typography>Dein Code</Typography>
       </div>
     </div>
@@ -73,13 +88,13 @@ const PersonInfo: FunctionComponent = () => (
   <Container>
     <List>
       <ListItem>
-        <ListItemText primary="Max Mustermann" secondary="Name" />
+        <ListItemText primary={report.name} secondary="Name" />
       </ListItem>
       <ListItem>
-        <ListItemText primary="Edeka Rees, Karlsruhe" secondary="Ort" />
+        <ListItemText primary={report.storeAddress} secondary="Ort" />
       </ListItem>
       <ListItem>
-        <ListItemText primary="Anzahl Begleitpersonen: 1" />
+        <ListItemText primary={peopleNumber} />
       </ListItem>
       <ListItem>
         <ListItemText secondary="Hinweis: Einlass nur mit Personalausweis" />
