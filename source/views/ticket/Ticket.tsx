@@ -1,21 +1,11 @@
 import React, { FunctionComponent } from 'react'
-import {
-  Container,
-  Card,
-  CardHeader,
-  CardContent,
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  List,
-  ListItem,
-  ListItemText
-} from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
+import { Typography, List, ListItem, ListItemText } from '@material-ui/core'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
+import CalendarIcon from '@material-ui/icons/CalendarToday'
+import { Logo } from '../../components/logo'
+import { useAppState } from '../../providers'
 
-const { wrap, date, upperDate, lowerDate, time } = require('./ticket.css')
+const { date, upperDate, lowerDate, time, logo } = require('./ticket.css')
 
 const report = {
   reserverationTime: 30,
@@ -31,75 +21,102 @@ const peopleNumber = 'Anzahl Begleitpersonen: '.concat(
   report.numberOfAdditionalPeople
 )
 
-export const Ticket: FunctionComponent = () => (
-  <div className={wrap}>
-    <HeaderBar />
-    <Card>
-      <CardHeader title="Super, das hat geklappt!" />
-      <CardContent>
-        <Container>
-          <Typography variant="h4">QOODS</Typography>
-          <DateInfo />
-          <PersonInfo />
-        </Container>
-      </CardContent>
-    </Card>
-  </div>
-)
+export const Ticket: FunctionComponent = () => {
+  const { state } = useAppState()
+  if (!state.ticket) return null
+  return (
+    <>
+      <Typography style={{ textAlign: 'center' }} variant="h6">
+        Super, das hat geklappt!
+      </Typography>
+      <div className={logo}>
+        <Logo />
+      </div>
+      <DateInfo />
+      <PersonInfo />
+    </>
+  )
+}
 
-const HeaderBar: FunctionComponent = () => (
-  <AppBar position="static">
-    <Toolbar>
-      <IconButton href="/">
-        <CloseIcon />
-      </IconButton>
-      <Typography variant="h6">Deine Reservierung</Typography>
-    </Toolbar>
-  </AppBar>
-)
+const DateInfo: FunctionComponent = () => {
+  const { state } = useAppState()
 
-const DateInfo: FunctionComponent = () => (
-  <Container maxWidth="xl">
+  return (
     <div className={date}>
       <div className={upperDate}>
-        <Typography variant="h6">{report.reserverationTime}</Typography>
-        <Typography>MIN</Typography>
+        <Typography variant="h6">{report.reserverationTime} MIN</Typography>
         <div
           style={{
             display: 'flex',
             justifyContent: 'center',
-            marginTop: '20px'
+            marginTop: '8px'
+          }}
+        >
+          <CalendarIcon fontSize="small" />
+          <div className={time}>
+            {new Intl.DateTimeFormat('de-DE', {
+              weekday: 'long',
+              month: 'long',
+              day: 'numeric'
+            }).format(new Date(state.ticket.slot))}{' '}
+          </div>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '10px',
+            marginBottom: '8px'
           }}
         >
           <AccessTimeIcon fontSize="small" />
           <div className={time}>
-            {report.reserverationStartTime} - {report.reserverationEndTime}
+            {new Intl.DateTimeFormat('de-DE', {
+              hour: 'numeric',
+              minute: 'numeric'
+            }).format(new Date(state.ticket.slot))}{' '}
+            {' -'}{' '}
+            {new Intl.DateTimeFormat('de-DE', {
+              hour: 'numeric',
+              minute: 'numeric'
+            }).format(
+              new Date(new Date(state.ticket.slot).getTime() + 30 * 60000)
+            )}
           </div>
         </div>
       </div>
       <div className={lowerDate}>
-        <Typography variant="h6">{report.code}</Typography>
-        <Typography>Dein Code</Typography>
+        <Typography>Dein Code:</Typography>
+        <Typography variant="h6">{state.ticket.code}</Typography>
       </div>
     </div>
-  </Container>
-)
+  )
+}
 
-const PersonInfo: FunctionComponent = () => (
-  <Container>
+const PersonInfo: FunctionComponent = () => {
+  const { state } = useAppState()
+
+  return (
     <List>
       <ListItem>
-        <ListItemText primary={report.name} secondary="Name" />
+        <ListItemText primary={state.ticket.name} secondary="Name" />
       </ListItem>
       <ListItem>
-        <ListItemText primary={report.storeAddress} secondary="Ort" />
+        <ListItemText secondary="Ort">
+          {state.ticket.store!.address_components[1].long_name}
+          {` ${state.ticket.store!.address_components[0].long_name}`}
+          {` ${state.ticket.store!.address_components[6].long_name}`}
+          {` ${state.ticket.store!.address_components[3].long_name}`}
+        </ListItemText>
       </ListItem>
       <ListItem>
-        <ListItemText primary={peopleNumber} />
+        <ListItemText secondary="Anzahl der Personen">
+          {state.ticket.nOfPersons}
+        </ListItemText>
       </ListItem>
       <ListItem>
         <ListItemText secondary="Hinweis: Einlass nur mit Personalausweis" />
       </ListItem>
     </List>
-  </Container>
-)
+  )
+}

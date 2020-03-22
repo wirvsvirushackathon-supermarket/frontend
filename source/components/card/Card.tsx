@@ -16,12 +16,13 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import CloseIcon from '@material-ui/icons/Close'
 import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { eachDayOfInterval, isSameDay } from 'date-fns'
+import { useHistory } from 'react-router-dom'
 import { DaySelect } from '../day-select'
 import { SlotList } from '../slot-list'
 import { getRandomSlots } from '../mocked-api'
 import { PersonSlider } from '../person-slider/PersonSlider'
 import { TextField } from '../text-field'
-import { createUser } from '../../gql'
+import { createUser, createBooking } from '../../gql'
 import { useAppState } from '../../providers'
 
 const useStyles = makeStyles(() =>
@@ -64,7 +65,8 @@ export const Card: FunctionComponent = () => {
   const [selectedSlot, setSelectedSlot] = useState<string>()
   const [isFormValid, setIsFormValid] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
-  const { state } = useAppState()
+  const { state, setAppState } = useAppState()
+  const history = useHistory()
   const { currentPlaceApiResult } = state
 
   useEffect(() => {
@@ -88,29 +90,30 @@ export const Card: FunctionComponent = () => {
     )
   }
 
-  const getHighestAvailability = (): number => {
-    // eslint-disable-next-line prefer-spread
-    return Math.max.apply(
-      Math,
-      getAllSlotsForASelectedDay().map(slot => slot.available)
-    )
-  }
+  const getHighestAvailability = (): number => 3
 
   const handleFormSubmit = async (): void => {
-    // const res = await createUser({
-    //   firstName: 'john',
-    //   lastName: 'doe',
-    //   uuid: 'meh'
-    // })
     if (isFormValid) {
-      console.log('DAY', selectedDay)
-      console.log('SLOT', selectedSlot)
-      console.log('PERSONS', selectedPersons)
-      console.log('NAME', selectedName)
+      setAppState({
+        ...state,
+        ticket: {
+          day: selectedDay,
+          slot: selectedSlot!,
+          name: selectedName,
+          nOfPersons: selectedPersons,
+          code: Math.round(Math.random() * 1000000),
+          store: currentPlaceApiResult!
+        },
+        currentPlaceApiResult: undefined
+      })
+      history.push('/overlay/ticket')
     }
   }
 
   if (!currentPlaceApiResult || isHidden) return null
+
+  console.log(currentPlaceApiResult.photos[0].getUrl)
+
   return (
     <MaterialCard className={classes.root}>
       <CardActionArea
@@ -120,7 +123,11 @@ export const Card: FunctionComponent = () => {
         <CardMedia
           component="img"
           height="120"
-          image={currentPlaceApiResult.photos[0].getUrl()}
+          image={
+            typeof currentPlaceApiResult.photos[0].getUrl === 'function'
+              ? currentPlaceApiResult.photos[0].getUrl()
+              : ''
+          }
           title="Contemplative Reptile"
         />
         <CardContent>
@@ -160,7 +167,10 @@ export const Card: FunctionComponent = () => {
           color="primary"
           aria-label="back"
           onClick={(): void => {
-            setIsHidden(true)
+            setAppState({
+              ...state,
+              currentPlaceApiResult: undefined
+            })
           }}
         >
           <CloseIcon />

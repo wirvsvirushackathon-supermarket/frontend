@@ -1,0 +1,7 @@
+schema: ./schema.gql
+
+# documents: ./src/**/*.graphql
+
+generates:
+  source/api.types.ts:
+    - typescript

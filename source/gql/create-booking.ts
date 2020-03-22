@@ -15,5 +15,4 @@ export const getTicket = async () => {
     }
 `
   const rest = await request(env.gqlEndpoint, query)
-  console.log(res)
 }
