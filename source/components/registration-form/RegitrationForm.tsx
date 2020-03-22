@@ -6,7 +6,6 @@ import {
   createStyles,
   Button,
   Divider,
-  Button,
   ButtonGroup,
   Typography
 } from '@material-ui/core'
@@ -23,7 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
       'margin-bottom': 0
     },
     'button-selected': {
-      'background-color': '#BB86FC'
+      'background-color': '#c49bfc',
+      color: '#000000 !important'
     }
   })
 )
@@ -89,7 +89,9 @@ export const RegistrationForm: FunctionComponent = () => {
       <TextField label="Öffnungszeiten" placeholder="08:30 - 19:00" />
 
       <Divider />
-      <Button>Registrieren</Button>
+      <Button color="primary" variant="contained">
+        Registrieren
+      </Button>
     </form>
   )
 }

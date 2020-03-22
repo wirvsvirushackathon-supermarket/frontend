@@ -9,8 +9,9 @@ const useStyles = makeStyles(() =>
       'text-align': 'center'
     },
     'button-selected': {
-      'background-color': '#BB86FC',
-      width: '100%'
+      'background-color': '#c49bfc',
+      width: '100%',
+      color: '#000000 !important'
     }
   })
 )

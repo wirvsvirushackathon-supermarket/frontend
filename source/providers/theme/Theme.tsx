@@ -12,12 +12,24 @@ import {
 
 const darkTheme = createMuiTheme({
   palette: {
-    type: 'dark'
+    type: 'dark',
+    primary: {
+      main: '#6200EE'
+    },
+    secondary: {
+      main: '#c49bfc'
+    }
   }
 })
 const lightTheme = createMuiTheme({
   palette: {
-    type: 'light'
+    type: 'light',
+    primary: {
+      main: '#6200EE'
+    },
+    secondary: {
+      main: '#c49bfc'
+    }
   }
 })
 
