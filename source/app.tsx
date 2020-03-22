@@ -1,19 +1,22 @@
 import React, { FunctionComponent } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 import { CssBaseline } from '@material-ui/core'
 import { ThemeProvider, AppStateProvider } from './providers'
-import { Home } from './views'
+import { Home, ReservationOverview } from './views'
 
 export const App: FunctionComponent = () => (
   <>
     <AppStateProvider>
       <ThemeProvider>
         <CssBaseline />
-        <Router>
-          <Route path="/">
+        <BrowserRouter>
+          <Route exact path="/reservations">
+            <ReservationOverview />
+          </Route>
+          <Route>
             <Home />
           </Route>
-        </Router>
+        </BrowserRouter>
       </ThemeProvider>
     </AppStateProvider>
   </>

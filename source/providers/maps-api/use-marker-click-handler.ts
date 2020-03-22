@@ -17,7 +17,16 @@ export const useMarkerClickHandler = () => {
     placesService.getDetails(
       {
         placeId,
-        fields: ['address_component', 'opening_hours', 'geometry']
+        fields: [
+          'address_component',
+          'opening_hours',
+          'geometry',
+          'name',
+          'photos',
+          'place_id',
+          'url',
+          'adr_address'
+        ]
       },
       place => {
         setAppState({

@@ -10,8 +10,8 @@ const LOCAL_STORAGE_KEY = 'APP_STATE'
 const defaultState = {
   sidebarVisible: false,
   userLocation: {
-    lat: 0,
-    lon: 0
+    lat: 52.5192,
+    lon: 13.4061
   },
   placeApiSearchType: 'grocery_or_supermarket',
   currentPlaceApiResult: undefined,
