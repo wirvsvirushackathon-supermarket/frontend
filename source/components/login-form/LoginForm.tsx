@@ -40,7 +40,13 @@ export const LoginForm: FunctionComponent = () => {
         <TextField key={label} id={label} label={label} />
       ))}
       <Divider />
-      <Button onClick={() => history.push('/reservations')}>Login</Button>
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={() => history.push('/reservations')}
+      >
+        Login
+      </Button>
       <Link href="/overlay/register">Registrieren</Link>
       <Link href="/wip">Passwort vergessen</Link>
     </form>
