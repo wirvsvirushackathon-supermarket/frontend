@@ -61,7 +61,8 @@ export const AppStateProvider: FunctionComponent = props => {
   )
 
   const persistentSetter = (newState: AppState): void => {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newState))
+    const { currentPlaceApiResult: _c, ...rest } = newState
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(rest))
     setAppState({ ...newState })
   }
 

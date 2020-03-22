@@ -20,15 +20,15 @@ export const useKeyupHandler = (): ((val: string) => void) => {
       type: state.placeApiSearchType,
       rankBy: 1
     }
-    if (value.length >= 2) {
-      helpers.searchAndAddMarkers(request, onClick)
-    } else {
-      helpers.clearMarkers()
-    }
+    helpers.searchAndAddMarkers(request, onClick)
   }, [value])
   return (val: string): void => {
     clearTimeout(debouncer)
     setSkip(true)
+    if (val.length <= 2) {
+      helpers.clearMarkers()
+      return
+    }
     setDebouncer(
       setTimeout(() => {
         setSkip(false)

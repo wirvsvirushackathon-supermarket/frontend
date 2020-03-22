@@ -10,7 +10,8 @@ import {
   LoginForm,
   MainMenu,
   Ticket,
-  GeolocationButton
+  GeolocationButton,
+  GeolocationCenter
 } from '../../components'
 import { MapsApiProvider } from '../../providers'
 import { useHomeStyles } from './use-home-styles'
@@ -69,9 +70,16 @@ export const Home: FunctionComponent = () => {
             {component}
           </Overlay>
         ))}
-        <div className={classes.geoButton}>
-          {showGeoButton && <GeolocationButton />}
-        </div>
+        {showGeoButton && (
+          <div className={classes.geoButton}>
+            <GeolocationButton />
+          </div>
+        )}
+        {!showGeoButton && (
+          <div className={classes.geoButton}>
+            <GeolocationCenter />
+          </div>
+        )}
       </MapsApiProvider>
       <Card />
     </div>
