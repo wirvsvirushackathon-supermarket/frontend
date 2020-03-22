@@ -17,10 +17,6 @@ const report = {
   numberOfAdditionalPeople: '2'
 }
 
-const peopleNumber = 'Anzahl Begleitpersonen: '.concat(
-  report.numberOfAdditionalPeople
-)
-
 export const Ticket: FunctionComponent = () => {
   const { state } = useAppState()
   if (!state.ticket) return null

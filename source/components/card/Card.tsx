@@ -22,7 +22,6 @@ import { SlotList } from '../slot-list'
 import { getRandomSlots } from '../mocked-api'
 import { PersonSlider } from '../person-slider/PersonSlider'
 import { TextField } from '../text-field'
-import { createUser, createBooking } from '../../gql'
 import { useAppState } from '../../providers'
 
 const useStyles = makeStyles(() =>

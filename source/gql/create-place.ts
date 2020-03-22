@@ -16,6 +16,5 @@ export const getTicket = async ({ name, placeId }) => {
     }
   }
 `
-  const rest = await request(env.gqlEndpoint, query)
-  console.log(res)
+  // const rest = await request(env.gqlEndpoint, query)
 }
