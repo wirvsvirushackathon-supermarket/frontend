@@ -7,6 +7,7 @@ import {
   Overlay,
   About,
   RegistrationForm,
+  LoginForm,
   MainMenu
 } from '../../components'
 import { MapsApiProvider } from '../../providers'
@@ -23,6 +24,11 @@ export const Home: FunctionComponent = () => {
       path: '/overlay/register',
       title: 'Filiale anmelden',
       component: <RegistrationForm />
+    },
+    {
+      path: '/overlay/login',
+      title: 'Login Filialbesitzer',
+      component: <LoginForm />
     }
   ]
   return (
