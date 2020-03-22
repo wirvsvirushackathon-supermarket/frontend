@@ -8,6 +8,7 @@
     "target": "ES5",
     "sourceMap": true,
     "rootDir": "./",
-    "baseUrl": "./source"
+    "baseUrl": "./source",
+    "noImplicitAny": false
   }
 }
