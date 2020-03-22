@@ -15,7 +15,6 @@ import {
 import AddIcon from '@material-ui/icons/Add'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import CloseIcon from '@material-ui/icons/Close'
-import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { eachDayOfInterval, isSameDay } from 'date-fns'
 import { useHistory } from 'react-router-dom'
 import { DaySelect } from '../day-select'
