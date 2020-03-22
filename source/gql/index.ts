@@ -1,2 +1,2 @@
-export * from './create-ticket'
+export * from './create-booking'
 export * from './create-user'

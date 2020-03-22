@@ -1,0 +1,97 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Booking {
+  user: User!
+  code: String!
+  start: DateTime!
+  duration: Duration!
+  place: Place!
+}
+
+input CreateBookingInput {
+  start: DateTime!
+  duration: Duration!
+  placeId: Float!
+  userId: Float!
+}
+
+input CreatePlaceInput {
+  placeId: String!
+  name: String!
+  openingTime: DateTime!
+  closingTime: DateTime!
+  slotCount: Float!
+  slotSize: Duration!
+}
+
+input CreateUserInput {
+  surname: String!
+  name: String!
+}
+
+"""
+Date custom scalar type
+"""
+scalar DateTime
+
+"""
+Date custom scalar type
+"""
+scalar Duration
+
+type Mutation {
+  createPlace(createPlaceInput: CreatePlaceInput!): Place!
+  updatePlace(updatePlaceInput: UpdatePlaceInput!): Place!
+  createUser(createUserInput: CreateUserInput!): User!
+  updateUser(updateUserInput: UpdateUserInput!): User!
+  createBooking(createBookingInput: CreateBookingInput!): Booking!
+  updateBooking(updateBookingInput: UpdateBookingInput!): Booking!
+}
+
+type Place {
+  placeId: String!
+  name: String!
+  openingTime: DateTime!
+  closingTime: DateTime!
+  slotCount: Float!
+  slotSize: Duration!
+  bookings: [Booking!]!
+}
+
+type Query {
+  places: [Place!]!
+  place(id: Int!): Place!
+  user(id: Int!): User!
+  bookings: [Booking!]!
+  booking(id: Int!): Booking!
+  availableSlots(startTime: DateTime!, slotSize: Duration!, placeId: Int!): Int!
+}
+
+input UpdateBookingInput {
+  start: DateTime!
+  duration: Duration!
+}
+
+input UpdatePlaceInput {
+  placeId: String!
+  name: String!
+  openingTime: DateTime!
+  closingTime: DateTime!
+  slotCount: Float!
+  slotSize: Duration!
+}
+
+input UpdateUserInput {
+  uuid: String!
+  surname: String!
+  name: String!
+}
+
+type User {
+  uuid: String!
+  surname: String!
+  name: String!
+  bookings: [Booking!]!
+}

@@ -22,7 +22,7 @@ import { SlotList } from '../slot-list'
 import { slots } from '../mocked-api'
 import { PersonSlider } from '../person-slider/PersonSlider'
 import { TextField } from '../text-field'
-import { createUser } from '../../gql'
+import { createUser, createBooking } from '../../gql'
 import { useAppState } from '../../providers'
 
 const useStyles = makeStyles(() =>
@@ -62,7 +62,7 @@ export const Card: FunctionComponent = () => {
   const [selectedSlot, setSelectedSlot] = useState<string>()
   const [isFormValid, setIsFormValid] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
-  const { state } = useAppState()
+  const { state, setAppState } = useAppState()
   const history = useHistory()
   const { currentPlaceApiResult } = state
 
@@ -96,16 +96,19 @@ export const Card: FunctionComponent = () => {
 
   const handleFormSubmit = async (): void => {
     if (isFormValid) {
-      // const { uuid } = await createUser({
-      //   firstName: ' ',
-      //   lastName: selectedName
-      // })
+      setAppState({
+        ...state,
+        ticket: {
+          day: selectedDay,
+          slot: selectedSlot!,
+          name: selectedName,
+          nOfPersons: selectedPersons,
+          code: Math.round(Math.random() * 1000000),
+          store: currentPlaceApiResult!
+        },
+        currentPlaceApiResult: undefined
+      })
       history.push('/overlay/ticket')
-      // console.log(res)
-      console.log('DAY', selectedDay)
-      console.log('SLOT', selectedSlot)
-      console.log('PERSONS', selectedPersons)
-      console.log('NAME', selectedName)
     }
   }
 
@@ -119,7 +122,11 @@ export const Card: FunctionComponent = () => {
         <CardMedia
           component="img"
           height="120"
-          image={currentPlaceApiResult.photos[0].getUrl()}
+          image={
+            typeof currentPlaceApiResult.photos[0].getUrl === 'function'
+              ? currentPlaceApiResult.photos[0].getUrl()
+              : ''
+          }
           title="Contemplative Reptile"
         />
         <CardContent>

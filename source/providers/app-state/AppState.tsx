@@ -4,6 +4,7 @@ import React, {
   FunctionComponent,
   useContext
 } from 'react'
+import { Booking } from '../../api.types'
 
 const LOCAL_STORAGE_KEY = 'APP_STATE'
 
@@ -15,7 +16,8 @@ const defaultState = {
   },
   placeApiSearchType: 'grocery_or_supermarket',
   currentPlaceApiResult: undefined,
-  visibleMarkers: []
+  visibleMarkers: [],
+  bookings: []
 }
 
 type AppState = {
@@ -27,6 +29,15 @@ type AppState = {
   placeApiSearchType: string
   currentPlaceApiResult?: google.maps.places.PlaceResult
   visibleMarkers: google.maps.Marker[]
+  bookings: Booking[]
+  ticket: {
+    day: Date
+    slot: string
+    name: string
+    nOfPersons: number
+    code: number
+    store: google.maps.places.PlaceResult
+  }
 }
 
 const localStorageState = (): any => {
@@ -38,6 +49,7 @@ const localStorageState = (): any => {
 }
 
 const defaultStoredState = localStorageState() as typeof defaultState
+console.log(defaultStoredState)
 
 const AppStateContext = createContext({
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -46,7 +58,9 @@ const AppStateContext = createContext({
 })
 
 export const AppStateProvider: FunctionComponent = props => {
-  const [state, setAppState] = useState<AppState>(defaultState)
+  const [state, setAppState] = useState<AppState>(
+    defaultStoredState || defaultState
+  )
 
   const persistentSetter = (newState: AppState): void => {
     const { visibleMarkers: _s, ...rest } = newState

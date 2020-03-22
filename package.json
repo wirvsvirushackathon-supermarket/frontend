@@ -33,6 +33,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.13.1",
+    "@graphql-codegen/typescript": "^1.13.1",
     "@types/date-fns": "^2.6.0",
     "@types/google-map-react": "^1.1.5",
     "@types/react": "^16.9.25",
