@@ -16,7 +16,6 @@ const defaultState = {
   },
   placeApiSearchType: 'grocery_or_supermarket',
   currentPlaceApiResult: undefined,
-  visibleMarkers: [],
   bookings: []
 }
 
@@ -28,7 +27,6 @@ type AppState = {
   }
   placeApiSearchType: string
   currentPlaceApiResult?: google.maps.places.PlaceResult
-  visibleMarkers: google.maps.Marker[]
   bookings: Booking[]
   ticket: {
     day: Date
@@ -53,7 +51,6 @@ const defaultStoredState =
   ({ ...localStorageState(), visibleMarkers: [] } as typeof defaultState)
 
 const AppStateContext = createContext({
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
   setAppState: (_State: AppState) => {},
   state: (defaultStoredState || defaultState) as AppState
 })
@@ -64,8 +61,7 @@ export const AppStateProvider: FunctionComponent = props => {
   )
 
   const persistentSetter = (newState: AppState): void => {
-    const { visibleMarkers: _s, ...rest } = newState
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(rest))
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newState))
     setAppState({ ...newState })
   }
 
