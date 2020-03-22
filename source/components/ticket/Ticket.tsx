@@ -2,20 +2,10 @@ import React, { FunctionComponent } from 'react'
 import { Typography, List, ListItem, ListItemText } from '@material-ui/core'
 import AccessTimeIcon from '@material-ui/icons/AccessTime'
 import CalendarIcon from '@material-ui/icons/CalendarToday'
-import { Logo } from '../../components/logo'
+import { Logo } from '../logo'
 import { useAppState } from '../../providers'
 
 const { date, upperDate, lowerDate, time, logo } = require('./ticket.css')
-
-const report = {
-  reserverationTime: 30,
-  reserverationStartTime: '13:30',
-  reserverationEndTime: '14:00',
-  code: 4789,
-  name: 'Max Mustermann',
-  storeAddress: 'Edeka Rees, Karlsruhe',
-  numberOfAdditionalPeople: '2'
-}
 
 export const Ticket: FunctionComponent = () => {
   const { state } = useAppState()
@@ -40,7 +30,7 @@ const DateInfo: FunctionComponent = () => {
   return (
     <div className={date}>
       <div className={upperDate}>
-        <Typography variant="h6">{report.reserverationTime} MIN</Typography>
+        <Typography variant="h6">30 MIN</Typography>
         <div
           style={{
             display: 'flex',

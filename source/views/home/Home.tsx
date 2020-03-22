@@ -8,10 +8,10 @@ import {
   About,
   RegistrationForm,
   LoginForm,
-  MainMenu
+  MainMenu,
+  Ticket
 } from '../../components'
 import { MapsApiProvider } from '../../providers'
-import { Ticket } from '../ticket'
 
 export const Home: FunctionComponent = () => {
   const location = useLocation()
