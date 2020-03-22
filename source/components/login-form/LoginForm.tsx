@@ -23,10 +23,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const conf = [
   {
-    label: 'Email'
+    label: 'Email',
+    type: 'text'
   },
   {
-    label: 'Passwort'
+    label: 'Passwort',
+    type: 'password'
   }
 ]
 export const LoginForm: FunctionComponent = () => {
@@ -36,8 +38,8 @@ export const LoginForm: FunctionComponent = () => {
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      {conf.map(({ label }) => (
-        <TextField key={label} id={label} label={label} />
+      {conf.map(({ label, type }) => (
+        <TextField key={label} id={label} label={label} type={type} />
       ))}
       <Divider />
       <Button
