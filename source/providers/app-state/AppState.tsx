@@ -65,21 +65,6 @@ export const AppStateProvider: FunctionComponent = props => {
     setAppState({ ...newState })
   }
 
-  // useEffect(() => {
-  navigator.geolocation.getCurrentPosition(
-    ({ coords }) => {
-      persistentSetter({
-        ...state,
-        userLocation: {
-          lat: coords.latitude,
-          lon: coords.longitude
-        }
-      })
-    },
-    () => {}
-  )
-  // }, [])
-
   return (
     <AppStateContext.Provider
       value={{

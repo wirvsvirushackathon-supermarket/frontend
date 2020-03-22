@@ -31,7 +31,7 @@ export type GoogleMapsHelpers = {
   clearMarkers: () => void
 }
 const defaultOpts: google.maps.MapOptions = {
-  zoom: 12,
+  zoom: 15,
   center: {
     lat: 52.52,
     lng: 13.4
@@ -49,7 +49,7 @@ export const MapsApiProvider: FunctionComponent = props => {
     mapState,
     setMapState
   })
-  const clearMarkers = useClearMarkers({ mapState, setMapState, services })
+  const clearMarkers = useClearMarkers({ mapState, services })
   return (
     <>
       <MapsApiContext.Provider
