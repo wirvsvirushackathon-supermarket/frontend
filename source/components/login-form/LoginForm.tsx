@@ -8,6 +8,7 @@ import {
   Link,
   Divider
 } from '@material-ui/core'
+import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,6 +30,8 @@ const conf = [
   }
 ]
 export const LoginForm: FunctionComponent = () => {
+  const history = useHistory()
+
   const classes = useStyles()
 
   return (
@@ -37,7 +40,7 @@ export const LoginForm: FunctionComponent = () => {
         <TextField key={label} id={label} label={label} />
       ))}
       <Divider />
-      <Button>Login</Button>
+      <Button onClick={() => history.push('/reservations')}>Login</Button>
       <Link href="/overlay/register">Registrieren</Link>
       <Link href="/wip">Passwort vergessen</Link>
     </form>

@@ -112,8 +112,6 @@ export const Card: FunctionComponent = () => {
 
   if (!currentPlaceApiResult || isHidden) return null
 
-  console.log(currentPlaceApiResult.photos[0].getUrl)
-
   return (
     <MaterialCard className={classes.root}>
       <CardActionArea
