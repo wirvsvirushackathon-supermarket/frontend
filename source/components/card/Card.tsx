@@ -9,12 +9,12 @@ import {
   Grid,
   Button,
   Paper,
-  Fab
+  Fab,
+  Slide
 } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack'
 import CloseIcon from '@material-ui/icons/Close'
-import { makeStyles, createStyles } from '@material-ui/core/styles'
 import { eachDayOfInterval, isSameDay } from 'date-fns'
 import { useHistory } from 'react-router-dom'
 import { DaySelect } from '../day-select'
@@ -22,42 +22,14 @@ import { SlotList } from '../slot-list'
 import { getRandomSlots } from '../mocked-api'
 import { PersonSlider } from '../person-slider/PersonSlider'
 import { TextField } from '../text-field'
-import { createUser, createBooking } from '../../gql'
 import { useAppState } from '../../providers'
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      position: 'absolute',
-      'z-index': 20,
-      width: '100%',
-      bottom: 0,
-      'border-bottom-left-radius': 0,
-      'border-bottom-right-radius': 0,
-      'max-height': 'calc(100% - 48px)',
-      overflow: 'scroll'
-    },
-    button: {
-      width: '100%'
-    },
-    backButton: {
-      position: 'absolute',
-      top: '10px',
-      left: '10px'
-    },
-    closeButton: {
-      position: 'absolute',
-      top: '10px',
-      right: '10px'
-    }
-  })
-)
+import { useCartStyles } from './use-card-styles'
 
 export const Card: FunctionComponent = () => {
   const [maxSlots] = useState(Math.floor(Math.random() * 16) + 10)
   const [slots] = useState(getRandomSlots(maxSlots))
 
-  const classes = useStyles()
+  const classes = useCartStyles()
   const [cardVisible, setCardVisible] = useState(false)
   const [selectedDay, setSelectedDay] = useState(new Date())
   const [selectedPersons, setSelectedPersons] = useState(1)
@@ -109,115 +81,122 @@ export const Card: FunctionComponent = () => {
       history.push('/overlay/ticket')
     }
   }
-
   if (!currentPlaceApiResult || isHidden) return null
 
   return (
-    <MaterialCard className={classes.root}>
-      <CardActionArea
-        disabled={cardVisible}
-        onClick={(): void => setCardVisible(true)}
-      >
-        <CardMedia
-          component="img"
-          height="120"
-          image={
-            typeof currentPlaceApiResult.photos[0].getUrl === 'function'
-              ? currentPlaceApiResult.photos[0].getUrl()
-              : ''
-          }
-          title="Contemplative Reptile"
-        />
-        <CardContent>
-          <Grid container>
-            <Grid item xs={7}>
-              <Typography variant="subtitle1">
-                {currentPlaceApiResult!.name}
-              </Typography>
-            </Grid>
-            <Grid item xs={5}>
-              <Typography variant="caption">
-                {currentPlaceApiResult!.address_components[1].long_name}
-                {` ${currentPlaceApiResult!.address_components[0].long_name}`}
-                <br />
-                {` ${currentPlaceApiResult!.address_components[6].long_name}`}
-                {` ${currentPlaceApiResult!.address_components[3].long_name}`}
-              </Typography>
-            </Grid>
-          </Grid>
-        </CardContent>
-      </CardActionArea>
-
-      {cardVisible && (
-        <Fab
-          className={classes.backButton}
-          color="primary"
-          aria-label="back"
-          onClick={(): void => setCardVisible(false)}
+    <Slide
+      direction="up"
+      timeout={250}
+      in={!isHidden}
+      mountOnEnter
+      unmountOnExit
+    >
+      <MaterialCard className={classes.root}>
+        <CardActionArea
+          disabled={cardVisible}
+          onClick={(): void => setCardVisible(true)}
         >
-          <ArrowBackIcon />
-        </Fab>
-      )}
+          <CardMedia
+            component="img"
+            height="120"
+            image={
+              typeof currentPlaceApiResult.photos[0].getUrl === 'function'
+                ? currentPlaceApiResult.photos[0].getUrl()
+                : ''
+            }
+            title="Contemplative Reptile"
+          />
+          <CardContent>
+            <Grid container>
+              <Grid item xs={7}>
+                <Typography variant="subtitle1">
+                  {currentPlaceApiResult!.name}
+                </Typography>
+              </Grid>
+              <Grid item xs={5}>
+                <Typography variant="caption">
+                  {currentPlaceApiResult!.address_components[1].long_name}
+                  {` ${currentPlaceApiResult!.address_components[0].long_name}`}
+                  <br />
+                  {` ${currentPlaceApiResult!.address_components[6].long_name}`}
+                  {` ${currentPlaceApiResult!.address_components[3].long_name}`}
+                </Typography>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </CardActionArea>
 
-      {!cardVisible && (
-        <Fab
-          className={classes.closeButton}
-          color="primary"
-          aria-label="back"
-          onClick={(): void => {
-            setAppState({
-              ...state,
-              currentPlaceApiResult: undefined
-            })
-          }}
-        >
-          <CloseIcon />
-        </Fab>
-      )}
-
-      <Collapse in={cardVisible}>
-        <CardContent>
-          <Button
-            className={classes.button}
-            variant="contained"
+        {cardVisible && (
+          <Fab
+            className={classes.backButton}
             color="primary"
-            startIcon={<AddIcon />}
-            disabled={!isFormValid}
-            onClick={handleFormSubmit}
+            aria-label="back"
+            onClick={(): void => setCardVisible(false)}
           >
-            Reservieren
-          </Button>
-        </CardContent>
+            <ArrowBackIcon />
+          </Fab>
+        )}
 
-        <CardContent>
-          <DaySelect
-            days={getDaysOfWeek()}
-            selected={selectedDay}
-            onDaySelected={setSelectedDay}
-          />
-        </CardContent>
+        {!cardVisible && (
+          <Fab
+            className={classes.closeButton}
+            color="primary"
+            aria-label="back"
+            onClick={(): void => {
+              setAppState({
+                ...state,
+                currentPlaceApiResult: undefined
+              })
+            }}
+          >
+            <CloseIcon />
+          </Fab>
+        )}
 
-        <CardContent>
-          <Paper elevation={3}>
-            <SlotList
-              slots={getAllSlotsForASelectedDay()}
-              onSlotSelected={setSelectedSlot}
-              maxSlots={maxSlots}
+        <Collapse in={cardVisible}>
+          <CardContent>
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              startIcon={<AddIcon />}
+              disabled={!isFormValid}
+              onClick={handleFormSubmit}
+            >
+              Reservieren
+            </Button>
+          </CardContent>
+
+          <CardContent>
+            <DaySelect
+              days={getDaysOfWeek()}
+              selected={selectedDay}
+              onDaySelected={setSelectedDay}
             />
-          </Paper>
-        </CardContent>
+          </CardContent>
 
-        <CardContent>
-          <PersonSlider
-            max={getHighestAvailability()}
-            onPersonsSelected={setSelectedPersons}
-          />
-        </CardContent>
+          <CardContent>
+            <Paper elevation={3}>
+              <SlotList
+                slots={getAllSlotsForASelectedDay()}
+                onSlotSelected={setSelectedSlot}
+                maxSlots={maxSlots}
+              />
+            </Paper>
+          </CardContent>
 
-        <CardContent>
-          <TextField onValueChange={setSelectedName} />
-        </CardContent>
-      </Collapse>
-    </MaterialCard>
+          <CardContent>
+            <PersonSlider
+              max={getHighestAvailability()}
+              onPersonsSelected={setSelectedPersons}
+            />
+          </CardContent>
+
+          <CardContent>
+            <TextField onValueChange={setSelectedName} />
+          </CardContent>
+        </Collapse>
+      </MaterialCard>
+    </Slide>
   )
 }

@@ -1,9 +1,8 @@
-import React, { FunctionComponent, Fragment } from 'react'
+import React, { FunctionComponent } from 'react'
 import { Card, CardContent, Typography, makeStyles } from '@material-ui/core'
 import TrackChangesIcon from '@material-ui/icons/TrackChanges'
 import PlaceIcon from '@material-ui/icons/Place'
 import NotListedLocationIcon from '@material-ui/icons/NotListedLocation'
-import FiberPinIcon from '@material-ui/icons/FiberPin'
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket'
 
 const useStyles = makeStyles({

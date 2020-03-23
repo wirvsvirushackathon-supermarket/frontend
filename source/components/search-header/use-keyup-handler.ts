@@ -1,32 +1,37 @@
 import { useState, useEffect } from 'react'
-import { useMapsApi, useAppState, useMapSearchShow } from '../../providers'
+import { useMap, useAppState } from '../../providers'
+import { useSearchResultClick } from './use-search-result-click'
 
 export const useKeyupHandler = (): ((val: string) => void) => {
-  const { placesService, mapService } = useMapsApi()
+  const { services, helpers } = useMap()
   const { state } = useAppState()
   const [value, setValue] = useState<string>('')
+  const onClick = useSearchResultClick()
   const [debouncer, setDebouncer] = useState<any>(null)
-  const search = useMapSearchShow({ placesService, mapService })
+  const [skip, setSkip] = useState(false)
   useEffect(() => {
-    if (!mapService) return
+    if (!services.mapService || skip) return
     const request = {
       name: value,
       location: {
-        lat: mapService.getCenter().lat(),
-        lng: mapService.getCenter().lng()
+        lat: services.mapService.getCenter().lat(),
+        lng: services.mapService.getCenter().lng()
       },
       type: state.placeApiSearchType,
-      // radius: 50,
       rankBy: 1
     }
-    if (value.length >= 2) {
-      search(request)
-    }
+    helpers.searchAndAddMarkers(request, onClick)
   }, [value])
   return (val: string): void => {
     clearTimeout(debouncer)
+    setSkip(true)
+    if (val.length <= 2) {
+      helpers.clearMarkers()
+      return
+    }
     setDebouncer(
       setTimeout(() => {
+        setSkip(false)
         setValue(val)
       }, 200)
     )

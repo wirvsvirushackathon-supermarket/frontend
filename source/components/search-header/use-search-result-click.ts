@@ -1,22 +1,13 @@
-import { useAppState } from '../app-state'
-import { useMap } from '.'
+import { useMap, useAppState } from '../../providers'
 
-export const useMarkerClickHandler = () => {
+export const useSearchResultClick = () => {
   const { services } = useMap()
   const { state, setAppState } = useAppState()
-  return ({
-    placeId,
-    lat,
-    lon
-  }: {
-    placeId: string
-    lat: number
-    lon: number
-  }): void => {
+  return (result: google.maps.places.PlaceResult): void => {
     if (!services.placesService || !services.mapService) return
     services.placesService.getDetails(
       {
-        placeId,
+        placeId: result.place_id!,
         fields: [
           'address_component',
           'opening_hours',
@@ -38,9 +29,12 @@ export const useMarkerClickHandler = () => {
       }
     )
     services.mapService.setZoom(15)
-    services.mapService.setCenter({
-      lat,
-      lng: lon
-    })
+    const center = {
+      lat: result.geometry?.location.lat(),
+      lng: result.geometry?.location.lng()
+    }
+    if (center.lat && center.lng) {
+      services.mapService.setCenter(center)
+    }
   }
 }
